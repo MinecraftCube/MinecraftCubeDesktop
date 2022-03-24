@@ -104,7 +104,7 @@ jobs:
       - name: Install Dependencies
         run: |
           flutter packages get
-      - name: Unit test
+      - name: Integration test
         run: |
           flutter pub run melos test:integration --no-select
   test_heavy_ubuntu:
@@ -126,7 +126,7 @@ jobs:
       - name: Install Dependencies
         run: |
           flutter packages get
-      - name: Unit test
+      - name: Integration test
         run: |
           flutter pub run melos test:integration --no-select
   test_heavy_macos:
@@ -148,7 +148,7 @@ jobs:
       - name: Install Dependencies
         run: |
           flutter packages get
-      - name: Unit test
+      - name: Integration test
         run: |
           flutter pub run melos test:integration --no-select
   build_windows:
