@@ -100,6 +100,10 @@ jobs:
       - test_windows
     env:
       MACHINE_OS: windows
+      DART_TEST_RESOURCES: ${{ github.workspace }}\minimal_resources
+      JAVA_17: $JAVA_HOME_17_X64
+      JAVA_8: $JAVA_HOME_8_X64
+      JAVA_VERSION: pass
     runs-on: windows-latest
     steps:
       - name: Restore test resources
@@ -122,6 +126,10 @@ jobs:
       - test_ubuntu
     env:
       MACHINE_OS: linux
+      DART_TEST_RESOURCES: ${{ github.workspace }}/minimal_resources
+      JAVA_17: $JAVA_HOME_17_X64
+      JAVA_8: $JAVA_HOME_8_X64
+      JAVA_VERSION: pass
     runs-on: ubuntu-latest
     steps:
       - name: Restore test resources
@@ -144,6 +152,10 @@ jobs:
       - test_macos
     env:
       MACHINE_OS: macos
+      DART_TEST_RESOURCES: ${{ github.workspace }}/minimal_resources
+      JAVA_17: $JAVA_HOME_17_X64
+      JAVA_8: $JAVA_HOME_8_X64
+      JAVA_VERSION: pass
     runs-on: macos-latest
     steps:
       - name: Restore test resources
