@@ -1,6 +1,15 @@
 name: Build executables (All platform)
 
-on: [push, pull_request]	
+on: 
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    types:
+      - opened
+    branches:
+      - 'main'
+    
 
 jobs:
   analyze: 
