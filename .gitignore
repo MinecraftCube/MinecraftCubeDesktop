@@ -1,0 +1,99 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+*.zip
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+reports/
+# Should dynamic get test resources on target machine
+test/resources/
+test/temp/
+
+# Web related
+lib/generated_plugin_registrant.dart
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# ignore
+.fvm/flutter_sdk
+test_temp/
+DEV_PROJECT/
+
+# Windows deps
+!/build_dependencies/windows/*
+
+# test 
+minimal_resources/
+zulu*/
+
+
+# ===   Windows Desktop
+flutter/ephemeral/
+
+# Visual Studio user-specific files.
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio build-related files.
+x64/
+x86/
+
+# Visual Studio cache files
+# files ending in .cache can be ignored
+*.[Cc]ache
+# but keep track of directories ending in .cache
+!*.[Cc]ache/
+
+# ===   Linux Desktop
+# flutter/ephemeral
+
+# ===   Macos Desktop
+# Flutter-related
+**/Flutter/ephemeral/
+**/Pods/
+Podfile.lock
+
+# Xcode-related
+**/xcuserdata/
+
+# For cross platfrom
+**/pubspec.lock
+.vscode

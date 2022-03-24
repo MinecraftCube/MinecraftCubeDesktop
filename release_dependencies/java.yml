@@ -1,0 +1,8 @@
+- 16:
+    windows: https://cdn.azul.com/zulu/bin/zulu16.32.15-ca-jdk16.0.2-win_x64.zip
+    linux: https://cdn.azul.com/zulu/bin/zulu16.32.15-ca-jdk16.0.2-linux_x64.tar.gz
+    macos: https://cdn.azul.com/zulu/bin/zulu16.32.15-ca-jdk16.0.2-macosx_x64.tar.gz
+- 8:
+    windows: https://cdn.azul.com/zulu/bin/zulu8.56.0.21-ca-jdk8.0.302-win_x64.zip
+    linux: https://cdn.azul.com/zulu/bin/zulu8.56.0.21-ca-jdk8.0.302-linux_x64.tar.gz
+    macos: https://cdn.azul.com/zulu/bin/zulu8.56.0.21-ca-jdk8.0.302-macosx_x64.tar.gz

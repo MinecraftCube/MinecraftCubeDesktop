@@ -1,0 +1,30 @@
+主畫面功能:
+Java列表, 系統, 建議zulu, 開啟資料夾
+
+主要流程:
+[給定 folder, installer?]
+清除 CubeJava process  {processCleanerCubit}
+清除 CubeJava executable {cubeJavaCleanerCubit}
+檢查 Eula {eulaCheckerCubit}
+檢查 Jar [jarFile] {jarCheckerBloc}
+決定 Java [javaExecutable, arguments, ] {javaDeciderCubit} - configuration_loader_repository
+檢查 Java {javaCheckerCubit} - java_printer_repository
+複製 Java [javaExecutable => cube_java] {javaDuplicatorCubit} - java_duplicator_repository
+中繼 Jar (安裝 Forge) [restart flow?] {forgeThresholdCubit} - forge_installer_repository 
+伺服器管理 [javaExecutable + jarFile + arguments] {serverBloc} - server_repository
+
+**使用安裝包安裝 {installerCubit} - installer_repository
+
+不管如何結束都要走以下流程
+清除 CubeJava process
+清除 CubeJava executable
+
+**
+當測試依賴於 Java 版本就要靠環境設定
+
+
+***
+java/xxx/sadas/bin/java
+servers/projectname/server.jar
+
+servers/projectname: ../../java/xxx/sadas/bin/java -jar server.jar

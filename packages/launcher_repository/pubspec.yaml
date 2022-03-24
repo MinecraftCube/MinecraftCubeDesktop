@@ -1,0 +1,28 @@
+name: launcher_repository
+description: A Dart Repository which the process cleanup domain.
+
+publish_to: none
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.14.0 <3.0.0"
+
+dependencies:
+  equatable: ^2.0.3
+  path: ^1.8.0
+  file: ^6.1.2
+  platform: ^3.1.0
+  process:
+    git: 
+      url: https://github.com/Tokenyet/process.dart.git
+      ref: 9a9b873604a0c8f58d1419e160146885fd8392b6
+  test_utilities:
+    path: ../test_utilities
+  url_launcher: ^6.0.20
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.4
+  mocktail: ^0.2.0

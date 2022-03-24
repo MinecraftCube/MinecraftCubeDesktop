@@ -1,0 +1,13 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    library_prefixes: false
+    omit_local_variable_types: false
+    require_trailing_commas: true
+    # prefer_relative_imports: false
+    # lines_longer_than_80_chars: false
+    # public_member_api_docs: false
+    # avoid_types_on_closure_parameters: false
+analyzer:
+  exclude: [lib/**.g.dart, test/**.mocks.dart]

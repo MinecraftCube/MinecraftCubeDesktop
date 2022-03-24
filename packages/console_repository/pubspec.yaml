@@ -1,0 +1,21 @@
+name: console_repository
+description: A Dart Repository which the process cleanup domain.
+
+publish_to: none
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.14.0 <3.0.0"
+
+dependencies:
+  test_utilities:
+    path: ../test_utilities
+  ansi_up: ^1.0.0
+  equatable: ^2.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.4
+  mocktail: ^0.2.0
