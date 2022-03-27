@@ -1,0 +1,339 @@
+name: Test (All platform)
+
+on: 
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '.github/workflows/build.yml'
+      - '.github/workflows/build_**.yml'
+      - '.github/workflows/test.yml'
+      - 'build_dependencies/**'
+      - 'fonts/**'
+      - 'lib/**'
+      - 'macos/**'
+      - 'linux/**'
+      - 'windows/**'
+      - 'packages/**'
+      - 'test/**'
+      - 'analysis_options.yaml'
+      - 'test.yaml'
+      - 'build.yaml'
+      - 'dart_test.yaml'
+      - 'pubspec.yaml'
+    # paths-ignore:
+    #   - '**/README.md'
+    #   - '**/README.md'
+  pull_request:
+    types:
+      - opened
+    branches:
+      - 'main'
+    paths:
+      - '.github/workflows/build.yml'
+      - 'build_dependencies/**'
+      - 'fonts/**'
+      - 'lib/**'
+      - 'macos/**'
+      - 'linux/**'
+      - 'windows/**'
+      - 'packages/**'
+      - 'test/**'
+      - 'analysis_options.yaml'
+      - 'build.yaml'
+      - 'dart_test.yaml'
+      - 'pubspec.yaml'
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2.3.0
+        with:
+          channel: 'stable'
+      - name: Install Dependencies
+        run: |
+          flutter packages get
+      - name: Lint and Format
+        run: |
+          flutter pub run melos run lint:all
+  test_windows:
+    env:
+      MACHINE_OS: windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2.3.0
+        with:
+          channel: 'stable'
+      - name: Install Dependencies
+        run: |
+          flutter packages get
+      - name: Unit test
+        run: |
+          flutter pub run melos test --no-select
+  test_ubuntu:
+    env:
+      MACHINE_OS: linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2.3.0
+        with:
+          channel: 'stable'
+      - name: Install Dependencies
+        run: |
+          flutter packages get
+      - name: Unit test
+        run: |
+          flutter pub run melos test --no-select
+  test_macos:
+    env:
+      MACHINE_OS: macos
+    runs-on: macos-latest
+    steps:
+      - name: Test (TODO removed)
+        run : |
+          top -l 1 -s 0 | grep PhysMem | awk '{print $2}'
+          top -l 1 -s 0 | grep PhysMem | awk '{print $6}'
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2.3.0
+        with:
+          channel: 'stable'
+      - name: Install Dependencies
+        run: |
+          flutter packages get
+      - name: Unit test
+        run: |
+          flutter pub run melos test --no-select
+  hard_resources_preparation:
+    needs: 
+      - test_windows
+      - test_ubuntu
+      - test_macos
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download a file
+        uses: carlosperate/download-file-action@v1
+        id: download-file
+        with:
+          file-url: 'https://dl.dropboxusercontent.com/s/i0s17qbooewf8le/minimal_resources.zip'
+          file-name: 'minimal_resources.zip'
+      - name: Print the file path (new-folder-to-be-created/new_filename.tar.gz)
+        run: echo "The file was downloaded to ${{ steps.download-file.outputs.file-path }}"
+      - name: Pass test assets
+        uses: actions/upload-artifact@v3
+        with:
+          name: minimal_resources
+          path: minimal_resources.zip
+      # - uses: montudor/action-zip@v1
+      #   with:
+      #     args: unzip -qq minimal_resources.zip
+      # - name: Cache multiple paths
+      #   uses: actions/cache@v3
+      #   with: 
+      #     key: ${{ runner.os }}-minimal_resources
+      #     path: |
+      #       ${{ github.workspace }}/minimal_resources
+  test_heavy_windows:
+    needs: 
+      - hard_resources_preparation
+      - test_windows
+    env:
+      MACHINE_OS: windows
+      DART_TEST_RESOURCES: ${{ github.workspace }}\minimal_resources
+      JAVA_VERSION: pass
+    runs-on: windows-latest
+    steps:
+      - name: Set variables
+        run: |
+          # set JAVA_17=%PROJECT_PATH%\zulu8.60.0.21-ca-jdk8.0.322-win_x64\bin\java.exe
+          # set JAVA_8=%PROJECT_PATH%\zulu17.32.13-ca-jdk17.0.2-win_x64\bin\java.exe
+          # set JAVA_17=%JAVA_HOME_17_X64%\bin\java.exe
+          # set JAVA_8=%JAVA_HOME_8_X64%\bin\java.exe
+          # set PATH=%JAVA_HOME_17_X64%\bin;%PATH%
+          "JAVA_17=$env:JAVA_HOME_17_X64\bin\java.exe" >> $env:GITHUB_ENV
+          "JAVA_8=$env:JAVA_HOME_8_X64\bin\java.exe" >> $env:GITHUB_ENV
+          "$env:JAVA_HOME_17_X64\bin" >> $env:GITHUB_PATH
+          # $env:Path = "$env:JAVA_HOME_17_X64\bin" + ";" + $env:Path
+          # $env:JAVA_17 = "$env:JAVA_HOME_17_X64\bin\java.exe"
+          # $env:JAVA_8 = "$env:JAVA_HOME_8_X64\bin\java.exe"
+      - name: Print variables
+        run: |
+          echo "DART_TEST_RESOURCES: $env:DART_TEST_RESOURCES"
+          echo "JAVA_17: $env:JAVA_17"
+          echo "JAVA_8: $env:JAVA_8"
+          echo "JAVA_HOME_17_X64: $env:JAVA_HOME_17_X64"
+          echo "JAVA_HOME_8_X64: $env:JAVA_HOME_8_X64"
+          echo "MACHINE_OS: $env:MACHINE_OS"
+          echo "PATH: $env:PATH"
+      # - name: Restore test resources
+      #   uses: actions/cache@v3
+      #   with: 
+      #     key: ${{ runner.os }}-minimal_resources
+      #     path: |
+      #       ${{ github.workspace }}/minimal_resources
+      - uses: actions/checkout@v3
+      - name: Download test resources
+        uses: actions/download-artifact@v3
+        with:
+          name: minimal_resources
+      - name: Extract test assets
+        run: |
+          7z x minimal_resources.zip
+          echo %CD%
+          dir
+      # - name: Setup Java
+      #   run: |
+      #     .\.github\workflows\scripts\windows_integration_setup.bat
+      - uses: subosito/flutter-action@v2.3.0
+        with:
+          channel: 'stable'
+      - name: Install Dependencies
+        run: |
+          flutter packages get
+      - name: Integration test
+        run: |
+          flutter pub run melos test:integration --no-select
+  test_heavy_ubuntu:
+    needs: 
+      - hard_resources_preparation
+      - test_ubuntu
+    env:
+      MACHINE_OS: linux
+      DART_TEST_RESOURCES: ${{ github.workspace }}/minimal_resources
+      JAVA_VERSION: pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set variables
+        run: |
+          # export JAVA_17=$JAVA_HOME_17_X64/bin/java
+          # export JAVA_8=$JAVA_HOME_8_X64/bin/java
+          # export PATH=$JAVA_HOME_17_X64/bin:$PATH
+          echo "JAVA_17=$JAVA_HOME_17_X64/bin/java" >> $GITHUB_ENV
+          echo "JAVA_8=$JAVA_HOME_8_X64/bin/java" >> $GITHUB_ENV
+          echo "$JAVA_HOME_17_X64/bin" >> $GITHUB_PATH  
+          # echo "{path}" >> $GITHUB_PATH
+          # export JAVA_17=$PWD/zulu17.32.13-ca-jdk17.0.2-linux_x64/bin/java
+          # export JAVA_8=$PWD/zulu8.60.0.21-ca-jdk8.0.322-linux_x64/bin/java
+      - name: Print variables
+        run: |
+          echo "DART_TEST_RESOURCES: $DART_TEST_RESOURCES"
+          echo "JAVA_17: $JAVA_17"
+          echo "JAVA_8: $JAVA_8"
+          echo "JAVA_HOME_17_X64: $JAVA_HOME_17_X64"
+          echo "JAVA_HOME_8_X64: $JAVA_HOME_8_X64"
+          echo "MACHINE_OS: $MACHINE_OS"
+          echo "PATH: $PATH"
+      # - name: Restore test resources
+      #   uses: actions/cache@v3
+      #   with: 
+      #     key: ${{ runner.os }}-minimal_resources
+      #     path: |
+      #       ${{ github.workspace }}/minimal_resources
+      - uses: actions/checkout@v3
+      - name: Download test resources
+        uses: actions/download-artifact@v3
+        with:
+          name: minimal_resources
+      - name: Extract test assets
+        run: |
+          7z x minimal_resources.zip
+          chmod +x minimal_resources/process_cleaner_repository/cube_java_linux
+          echo $PWD
+          ls
+      # - name: Setup Java
+      #   run: |
+      #     ./.github/workflows/scripts/linux_integration_setup.sh
+      - uses: subosito/flutter-action@v2.3.0
+        with:
+          channel: 'stable'
+      - name: Install Dependencies
+        run: |
+          flutter packages get
+      - name: Integration test
+        run: |
+          flutter pub run melos test:integration --no-select
+  test_heavy_macos:
+    needs: 
+      - hard_resources_preparation
+      - test_macos
+    env:
+      MACHINE_OS: macos
+      DART_TEST_RESOURCES: ${{ github.workspace }}/minimal_resources
+      JAVA_VERSION: pass
+    runs-on: macos-latest
+    steps:
+      - name: Confirm variables
+        run: |
+          # export JAVA_17=$JAVA_HOME_17_X64bin/java
+          # export JAVA_8=$JAVA_HOME_8_X64bin/java
+          # export PATH=$JAVA_HOME_17_X64bin:$PATH
+
+          echo "JAVA_17=$JAVA_HOME_17_X64/bin/java" >> $GITHUB_ENV
+          echo "JAVA_8=$JAVA_HOME_8_X64/bin/java" >> $GITHUB_ENV
+          echo "$JAVA_HOME_17_X64/bin" >> $GITHUB_PATH   
+
+          # export JAVA_17=$PWD/zulu17.32.13-ca-jdk17.0.2-macosx_x64/bin/java
+          # export JAVA_8=$PWD/zulu8.60.0.21-ca-jdk8.0.322-macosx_x64/bin/java
+      - name: Print variables
+        run: |
+          echo "DART_TEST_RESOURCES: $DART_TEST_RESOURCES"
+          echo "JAVA_17: $JAVA_17"
+          echo "JAVA_8: $JAVA_8"
+          echo "JAVA_HOME_17_X64: $JAVA_HOME_17_X64"
+          echo "JAVA_HOME_8_X64: $JAVA_HOME_8_X64"
+          echo "MACHINE_OS: $MACHINE_OS"
+          echo "PATH: $PATH"
+      # - name: Restore test resources
+      #   uses: actions/cache@v3
+      #   with: 
+      #     key: ${{ runner.os }}-minimal_resources
+      #     path: |
+      #       ${{ github.workspace }}/minimal_resources 
+      - uses: actions/checkout@v3  # checkout will clear the workspace first...
+      - name: Download test resources
+        uses: actions/download-artifact@v3
+        with:
+          name: minimal_resources
+      - name: Extract test assets
+        run: |
+          7z x minimal_resources.zip
+          chmod +x minimal_resources/process_cleaner_repository/cube_java_macos
+          echo $PWD
+          ls
+      # - name: Setup Java
+      #   run: |
+      #     ./.github/workflows/scripts/macos_integratin_setup.sh
+      - uses: subosito/flutter-action@v2.3.0
+        with:
+          channel: 'stable'
+      - name: Install Dependencies
+        run: |
+          flutter packages get
+      - name: Integration test
+        run: |
+          flutter pub run melos test:integration --no-select
+  build_windows:
+    needs: 
+      - test_heavy_windows
+    uses: ./.github/workflows/build_windows.yml
+    with: 
+      postfix: ${{ github.sha }}
+  build_ubuntu:
+    needs: 
+      - test_heavy_ubuntu
+    uses: ./.github/workflows/build_linux.yml
+    with: 
+      postfix: ${{ github.sha }}
+  build_macos:
+    needs: 
+      - test_heavy_macos
+    uses: ./.github/workflows/build_macos.yml
+    with: 
+      postfix: ${{ github.sha }}

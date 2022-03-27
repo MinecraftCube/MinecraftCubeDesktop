@@ -32,6 +32,6 @@ class ServerPropertiesRepository {
     for (final prop in properties) {
       result += '${prop.name}=${prop.value}\n';
     }
-    serverPropertiesFile.writeAsString(result);
+    await serverPropertiesFile.writeAsString(result);
   }
 }

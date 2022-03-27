@@ -1,0 +1,40 @@
+name: Build executables (MacOS)
+
+on:
+  workflow_call:
+    inputs:
+      postfix:
+        required: true
+        type: string
+
+jobs:
+  build_macos:
+    runs-on: macos-latest
+    # needs: 
+    #   - test_heavy_macos
+    env:
+      MACHINE_OS: macos
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2.3.0
+        with:
+          channel: 'stable'
+      - name: Doctor
+        run: flutter doctor -v
+      - name: Install Dependencies
+        run: |
+          flutter config --enable-macos-desktop	
+          flutter packages get
+      - name: Build release
+        run: |	
+          flutter build -v ${{ env.MACHINE_OS }} --release	
+      - name: Copy essentials to Macos and package (Release)
+        run: |
+          mkdir ${{ github.workspace }}/build/macos/Build/Products/minecraft_cube_desktop
+          mv ${{ github.workspace }}/build/macos/Build/Products/Release/minecraft_cube_desktop.app ${{ github.workspace }}/build/macos/Build/Products/minecraft_cube_desktop/minecraft_cube_desktop.app
+      - name: Upload MacOS artifaces (Release)
+        # if: startsWith(matrix.os, 'macOS')
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-release-${{ inputs.postfix }}
+          path: ${{ github.workspace }}/build/macos/Build/Products/minecraft_cube_desktop

@@ -24,7 +24,7 @@ class JavaInfoRepository {
   final JAVA_PORTABLE_FOLDER = 'java';
 
   Future<JavaInfo> getSystemJava() async {
-    String javaCmd = 'java --version';
+    String javaCmd = 'java -version';
     String findJavadCmd = '';
 
     if (_platform.isLinux) {

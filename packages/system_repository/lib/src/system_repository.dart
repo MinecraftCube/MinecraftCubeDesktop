@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cube_api/cube_api.dart';
 import 'package:platform/platform.dart';
@@ -168,21 +169,47 @@ class SystemRepository {
       total = totals.isEmpty ? null : totals.last;
       free = frees.isEmpty ? null : frees.last;
     }
-    // macos
-    total = total?.replaceFirst('M', '');
-    free = free?.replaceFirst('M', '');
 
     if (_platform.isMacOS) {
-      final nTotal = double.tryParse(total ?? '');
-      final nFree = double.tryParse(free ?? '');
-      total = nTotal == null ? null : (nTotal * 1024).toString();
-      free = nFree == null ? null : (nFree * 1024).toString();
+      // K M G T P E Z Y....
+      total = _processMacOSMemory(total);
+      free = _processMacOSMemory(free);
     }
 
     return const MemoryInfo().copyWith(
       totalSize: double.tryParse(total ?? ''),
       freeSize: double.tryParse(free ?? ''),
     );
+  }
+
+  String? _processMacOSMemory(String? input) {
+    // https://cseducators.stackexchange.com/questions/4425/should-i-teach-that-1-kb-1024-bytes-or-1000-bytes
+    double scale = 1;
+    final rawInput = input;
+    if (rawInput == null) return null;
+    if (rawInput.contains('K')) {
+      scale *= 1;
+    } else if (rawInput.contains('M')) {
+      scale *= 1000;
+    } else if (rawInput.contains('G')) {
+      scale *= pow(1000, 2);
+    } else if (rawInput.contains('T')) {
+      scale *= pow(1000, 3);
+    } else if (rawInput.contains('P')) {
+      scale *= pow(1000, 4);
+    } else if (rawInput.contains('E')) {
+      scale *= pow(1000, 5);
+    } else if (rawInput.contains('Z')) {
+      scale *= pow(1000, 6);
+    } else if (rawInput.contains('Y')) {
+      scale *= pow(1000, 7);
+    }
+    final matched = RegExp(r'(\d+)\w+').firstMatch(rawInput);
+    if (matched == null || matched.groupCount != 1) {
+      return null;
+    }
+    final amount = double.tryParse(matched.group(1) ?? '') ?? 0;
+    return (amount * scale).toString();
   }
 
   Future<String> getGpuInfo() async {

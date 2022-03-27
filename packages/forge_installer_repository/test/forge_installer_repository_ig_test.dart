@@ -1,4 +1,5 @@
 @Tags(['integration'])
+@Timeout(Duration(minutes: 3))
 import 'dart:async';
 
 import 'package:cube_api/cube_api.dart';

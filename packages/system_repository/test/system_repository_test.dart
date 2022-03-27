@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io' as io;
+import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -766,7 +767,7 @@ void main() {
             ),
           ).called(1);
         });
-        test('return correct MemoryInfo', () async {
+        test('return correct MemoryInfo (M)', () async {
           io.ProcessResult totalMemResult = MockProcessResult();
           io.ProcessResult freeMemResult = MockProcessResult();
           when(
@@ -798,10 +799,131 @@ void main() {
           expect(
             await repository.getMemoryInfo(),
             const MemoryInfo(
-              totalSize: 5712 * 1024,
-              freeSize: 2473 * 1024,
+              totalSize: 5712 * 1000,
+              freeSize: 2473 * 1000,
             ),
           );
+        });
+        group('return correct MemoryInfo (K,G,T,P,E,Z,Y,AnyOther)', () {
+          late io.ProcessResult totalMemResult;
+          late io.ProcessResult freeMemResult;
+          setUp(() {
+            totalMemResult = MockProcessResult();
+            freeMemResult = MockProcessResult();
+            when(
+              () => processManager.run(
+                captureAny(that: contains(macosTotalMemCmd)),
+                runInShell: true,
+                sanitize: false,
+                includeParentEnvironment: true,
+                stderrEncoding: any(named: 'stderrEncoding'),
+                stdoutEncoding: any(named: 'stdoutEncoding'),
+              ),
+            ).thenAnswer((_) async => totalMemResult);
+            when(() => totalMemResult.exitCode).thenReturn(0);
+            when(() => totalMemResult.stderr).thenReturn('');
+            when(() => freeMemResult.exitCode).thenReturn(0);
+            when(() => freeMemResult.stderr).thenReturn('');
+            when(
+              () => processManager.run(
+                captureAny(that: contains(macosFreeMemCmd)),
+                runInShell: true,
+                sanitize: false,
+                includeParentEnvironment: true,
+                stderrEncoding: any(named: 'stderrEncoding'),
+                stdoutEncoding: any(named: 'stdoutEncoding'),
+              ),
+            ).thenAnswer((_) async => freeMemResult);
+          });
+          test('K', () async {
+            when(() => totalMemResult.stdout).thenReturn('10K');
+            when(() => freeMemResult.stdout).thenReturn('1k');
+            expect(
+              await repository.getMemoryInfo(),
+              const MemoryInfo(
+                totalSize: 10,
+                freeSize: 1,
+              ),
+            );
+          });
+          test('G', () async {
+            when(() => totalMemResult.stdout).thenReturn('10G');
+            when(() => freeMemResult.stdout).thenReturn('1G');
+            expect(
+              await repository.getMemoryInfo(),
+              MemoryInfo(
+                totalSize: 10 * pow(1000, 2).toDouble(),
+                freeSize: pow(1000, 2).toDouble(),
+              ),
+            );
+          });
+          test('T', () async {
+            when(() => totalMemResult.stdout).thenReturn('10T');
+            when(() => freeMemResult.stdout).thenReturn('1T');
+            expect(
+              await repository.getMemoryInfo(),
+              MemoryInfo(
+                totalSize: 10 * pow(1000, 3).toDouble(),
+                freeSize: pow(1000, 3).toDouble(),
+              ),
+            );
+          });
+          test('P', () async {
+            when(() => totalMemResult.stdout).thenReturn('10P');
+            when(() => freeMemResult.stdout).thenReturn('1P');
+            expect(
+              await repository.getMemoryInfo(),
+              MemoryInfo(
+                totalSize: 10 * pow(1000, 4).toDouble(),
+                freeSize: pow(1000, 4).toDouble(),
+              ),
+            );
+          });
+          test('E', () async {
+            when(() => totalMemResult.stdout).thenReturn('10E');
+            when(() => freeMemResult.stdout).thenReturn('1E');
+            expect(
+              await repository.getMemoryInfo(),
+              MemoryInfo(
+                totalSize: 10 * pow(1000, 5).toDouble(),
+                freeSize: pow(1000, 5).toDouble(),
+              ),
+            );
+          });
+          test('Z', () async {
+            when(() => totalMemResult.stdout).thenReturn('10Z');
+            when(() => freeMemResult.stdout).thenReturn('1Z');
+            expect(
+              await repository.getMemoryInfo(),
+              MemoryInfo(
+                totalSize: 10 * pow(1000, 6).toDouble(),
+                freeSize: pow(1000, 6).toDouble(),
+              ),
+            );
+          });
+          test('Y', () async {
+            when(() => totalMemResult.stdout).thenReturn('10Y');
+            when(() => freeMemResult.stdout).thenReturn('1Y');
+            expect(
+              await repository.getMemoryInfo(),
+              MemoryInfo(
+                totalSize: 10 * pow(1000, 7).toDouble(),
+                freeSize: pow(1000, 7).toDouble(),
+              ),
+            );
+          });
+          test('Any', () async {
+            when(() => totalMemResult.stdout).thenReturn('10HAHA');
+            when(() => freeMemResult.stdout).thenReturn('1QAQ');
+            // Not sure
+            expect(
+              await repository.getMemoryInfo(),
+              const MemoryInfo(
+                totalSize: 10,
+                freeSize: 1,
+              ),
+            );
+          });
         });
       });
     });

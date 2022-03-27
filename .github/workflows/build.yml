@@ -1,181 +1,25 @@
 name: Build executables (All platform)
 
-on: 
-  push:
-    branches:
-      - 'main'
-  pull_request:
-    types:
-      - opened
-    branches:
-      - 'main'
-    
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+      postfix:
+        required: true
+        type: string
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true    
 
 jobs:
-  analyze: 
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
-        with:
-          channel: 'stable'
-      - name: Install Dependencies
-        run: |
-          flutter packages get
-      - name: Lint and Format
-        run: |
-          flutter pub run melos run lint:all
-  test_windows:
-    env:
-      MACHINE_OS: windows
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
-        with:
-          channel: 'stable'
-      - name: Install Dependencies
-        run: |
-          flutter packages get
-      - name: Unit test
-        run: |
-          flutter pub run melos test --no-select
-  test_ubuntu:
-    env:
-      MACHINE_OS: linux
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
-        with:
-          channel: 'stable'
-      - name: Install Dependencies
-        run: |
-          flutter packages get
-      - name: Unit test
-        run: |
-          flutter pub run melos test --no-select
-  test_macos:
-    env:
-      MACHINE_OS: macos
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
-        with:
-          channel: 'stable'
-      - name: Install Dependencies
-        run: |
-          flutter packages get
-      - name: Unit test
-        run: |
-          flutter pub run melos test --no-select
-  hard_resources_preparation:
-    needs: 
-      - test_windows
-      - test_ubuntu
-      - test_macos
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download a file
-        uses: carlosperate/download-file-action@v1
-        id: download-file
-        with:
-          file-url: 'https://dl.dropboxusercontent.com/s/i0s17qbooewf8le/minimal_resources.zip'
-          file-name: 'minimal_resources.zip'
-      - name: Print the file path (new-folder-to-be-created/new_filename.tar.gz)
-        run: echo "The file was downloaded to ${{ steps.download-file.outputs.file-path }}"
-      - uses: montudor/action-zip@v1
-        with:
-          args: unzip -qq minimal_resources.zip
-      - name: Cache multiple paths
-        uses: actions/cache@v3
-        with: 
-          key: shared_resources
-          path: |
-            ${{ github.workspace }}/minimal_resources
-  test_heavy_windows:
-    needs: 
-      - hard_resources_preparation
-      - test_windows
-    env:
-      MACHINE_OS: windows
-      DART_TEST_RESOURCES: ${{ github.workspace }}\minimal_resources
-      JAVA_17: $JAVA_HOME_17_X64
-      JAVA_8: $JAVA_HOME_8_X64
-      JAVA_VERSION: pass
-    runs-on: windows-latest
-    steps:
-      - name: Restore test resources
-        uses: actions/cache@v3
-        with: 
-          key: shared_resources
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
-        with:
-          channel: 'stable'
-      - name: Install Dependencies
-        run: |
-          flutter packages get
-      - name: Integration test
-        run: |
-          flutter pub run melos test:integration --no-select
-  test_heavy_ubuntu:
-    needs: 
-      - hard_resources_preparation
-      - test_ubuntu
-    env:
-      MACHINE_OS: linux
-      DART_TEST_RESOURCES: ${{ github.workspace }}/minimal_resources
-      JAVA_17: $JAVA_HOME_17_X64
-      JAVA_8: $JAVA_HOME_8_X64
-      JAVA_VERSION: pass
-    runs-on: ubuntu-latest
-    steps:
-      - name: Restore test resources
-        uses: actions/cache@v3
-        with: 
-          key: shared_resources
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
-        with:
-          channel: 'stable'
-      - name: Install Dependencies
-        run: |
-          flutter packages get
-      - name: Integration test
-        run: |
-          flutter pub run melos test:integration --no-select
-  test_heavy_macos:
-    needs: 
-      - hard_resources_preparation
-      - test_macos
-    env:
-      MACHINE_OS: macos
-      DART_TEST_RESOURCES: ${{ github.workspace }}/minimal_resources
-      JAVA_17: $JAVA_HOME_17_X64
-      JAVA_8: $JAVA_HOME_8_X64
-      JAVA_VERSION: pass
-    runs-on: macos-latest
-    steps:
-      - name: Restore test resources
-        uses: actions/cache@v3
-        with: 
-          key: shared_resources
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
-        with:
-          channel: 'stable'
-      - name: Install Dependencies
-        run: |
-          flutter packages get
-      - name: Integration test
-        run: |
-          flutter pub run melos test:integration --no-select
   build_windows:
+    if: ${{ inputs.os == 'windows' }}
     runs-on: windows-latest
-    needs: 
-      - test_heavy_windows
+    # needs: 
+    #   - test_heavy_windows
     env:
       MACHINE_OS: windows
     steps:
@@ -196,16 +40,17 @@ jobs:
         run: |
           cp -Path ${{ github.workspace }}/build_dependencies/windows/* ${{ github.workspace }}/build/windows/runner/Release/
           mkdir ${{ github.workspace }}/build/windows/runner/minecraft_cube_desktop/minecraft_cube_desktop
-          mv -Path ${{ github.workspace }}/build/windows/runner/Release/ ${{ github.workspace }}/build/windows/runner/minecraft_cube_desktop/minecraft_cube_desktop
+          mv -Path ${{ github.workspace }}/build/windows/runner/Release/* ${{ github.workspace }}/build/windows/runner/minecraft_cube_desktop/minecraft_cube_desktop
       - name: Upload Windows artifaces (Release)
         uses: actions/upload-artifact@v3
         with:
-          name: windows-release-${{ github.ref }}
+          name: windows-release-${{ github.sha }}
           path: ${{ github.workspace }}/build/windows/runner/minecraft_cube_desktop
   build_ubuntu:
+    if: ${{ inputs.os == 'linux' }}
     runs-on: ubuntu-latest
-    needs: 
-      - test_heavy_ubuntu
+    # needs: 
+    #   - test_heavy_ubuntu
     env:
       MACHINE_OS: linux
     steps:
@@ -214,7 +59,7 @@ jobs:
         with:
           channel: 'stable'
       - name: Install Linux dependencies	
-        if: startsWith(matrix.os, 'ubuntu')
+        # if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev liblzma-dev
@@ -229,18 +74,19 @@ jobs:
           flutter build -v ${{ env.MACHINE_OS }} --release	
       - name: Copy essentials to Linux artifacs and package (Release)
         run: |
-          cp -r ${{ github.workspace }}/build_dependencies/linux ${{ github.workspace }}/build/linux/x64/release/result
-          mv ${{ github.workspace }}/build/linux/x64/release/bundle/* ${{ github.workspace }}/build/linux/x64/release/result/usr/local/lib/minecraft_cube_desktop/
-          dpkg-deb --build --root-owner-group ${{ github.workspace }}/build/linux/x64/release/result
+          cp -r ${{ github.workspace }}/build_dependencies/linux ${{ github.workspace }}/build/linux/x64/release/minecraft_cube_desktop
+          mv ${{ github.workspace }}/build/linux/x64/release/bundle/* ${{ github.workspace }}/build/linux/x64/release/minecraft_cube_desktop/usr/local/lib/minecraft_cube_desktop/
+          dpkg-deb --build --root-owner-group ${{ github.workspace }}/build/linux/x64/release/minecraft_cube_desktop
       - name: Upload Linux artifaces (Release)
         uses: actions/upload-artifact@v3
         with:
-          name: linux-release-${{ github.ref }}
-          path: ${{ github.workspace }}/build/linux/x64/release/result.deb
+          name: linux-release-${{ github.sha }}
+          path: ${{ github.workspace }}/build/linux/x64/release/minecraft_cube_desktop.deb
   build_macos:
+    if: ${{ inputs.os == 'macos' }}
     runs-on: macos-latest
-    needs: 
-      - test_heavy_macos
+    # needs: 
+    #   - test_heavy_macos
     env:
       MACHINE_OS: macos
     steps:
@@ -260,34 +106,10 @@ jobs:
       - name: Copy essentials to Macos and package (Release)
         run: |
           mkdir ${{ github.workspace }}/build/macos/Build/Products/minecraft_cube_desktop
-          mv ${{ github.workspace }}/build/macos/Build/Products/Release/flutter_desktop_ci_example.app ${{ github.workspace }}/build/macos/Build/Products/minecraft_cube_desktop/minecraft_cube_desktop.app
+          mv ${{ github.workspace }}/build/macos/Build/Products/Release/minecraft_cube_desktop.app ${{ github.workspace }}/build/macos/Build/Products/minecraft_cube_desktop/minecraft_cube_desktop.app
       - name: Upload MacOS artifaces (Release)
-        if: startsWith(matrix.os, 'macOS')
+        # if: startsWith(matrix.os, 'macOS')
         uses: actions/upload-artifact@v3
         with:
-          name: macos-release-${{ github.ref }}
+          name: macos-release-${{ github.sha }}
           path: ${{ github.workspace }}/build/macos/Build/Products/minecraft_cube_desktop
-  release:
-    if: startsWith(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
-    needs: 
-      - build_windows
-      - build_macos
-      - build_ubuntu
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: windows-release-${{ github.ref }}
-      - uses: actions/download-artifact@v3
-        with:
-          name: macos-release-${{ github.ref }}
-      - uses: actions/download-artifact@v3
-        with:
-          name: linux-release-${{ github.ref }}
-      - name: Github Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            windows-release-${{ github.ref }}
-            macos-release-${{ github.ref }}
-            linux-release-${{ github.ref }}

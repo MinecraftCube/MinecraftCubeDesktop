@@ -1,7 +1,6 @@
-Package: flutter-desktop-ci-example
+Package: minecraft-cube-desktop
 Version: 1.0
 Architecture: amd64
 Maintainer: Tokenyet(Dowen) <tokenyete@gmail.com>
-Description: A example to build linux deb for installing automatically.
- More description? Add it your self.
+Description: Server management tool for minecraft
 Depends: libgtk-3-0, libblkid1, liblzma5

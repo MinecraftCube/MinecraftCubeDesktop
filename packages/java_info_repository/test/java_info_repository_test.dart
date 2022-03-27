@@ -63,7 +63,7 @@ void main() {
         );
       });
       group('[windows]', () {
-        const windowsJavaVersionCmd = 'java --version';
+        const windowsJavaVersionCmd = 'java -version';
         const windowsJavaLocationCmd = 'where.exe java';
         setUp(() {
           when(() => platform.isLinux).thenReturn(false);
@@ -190,7 +190,7 @@ void main() {
         });
       });
       group('[linux]', () {
-        const linuxJavaVersionCmd = "java --version";
+        const linuxJavaVersionCmd = "java -version";
         const linuxJavaLocationCmd = "which java";
         setUp(() {
           when(() => platform.isLinux).thenReturn(true);
@@ -317,7 +317,7 @@ void main() {
       });
 
       group('[macos]', () {
-        const macosJavaVersionCmd = "java --version";
+        const macosJavaVersionCmd = "java -version";
         const macosJavaLocationCmd = "which java";
         setUp(() {
           when(() => platform.isLinux).thenReturn(false);

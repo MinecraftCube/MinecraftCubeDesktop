@@ -1,5 +1,6 @@
 @Tags(['integration'])
-@Timeout(Duration(seconds: 60))
+@Timeout(Duration(minutes: 3))
+
 import 'dart:async';
 
 import 'dart:io' as io;
@@ -44,6 +45,13 @@ void main() {
   bool isPass = version == 'pass';
   bool isJava8 = version == '8' || isPass;
   bool isJava17 = version == '17' || isPass;
+
+  // ignore: avoid_print
+  // print('$version');
+  // ignore: avoid_print
+  // print(java8);
+  // ignore: avoid_print
+  // print(java17);
 
   group('ServerRepository', () {
     late FileSystem fileSystem;

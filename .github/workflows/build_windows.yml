@@ -1,0 +1,40 @@
+name: Build executables (Windows)
+
+on:
+  workflow_call:
+    inputs:
+      postfix:
+        required: true
+        type: string
+
+jobs:
+  build_windows:
+    runs-on: windows-latest
+    # needs: 
+    #   - test_heavy_windows
+    env:
+      MACHINE_OS: windows
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2.3.0
+        with:
+          channel: 'stable'
+      - name: Doctor
+        run: flutter doctor -v
+      - name: Install Dependencies
+        run: |
+          flutter config --enable-windows-desktop	
+          flutter packages get
+      - name: Build release
+        run: |	
+          flutter build -v ${{ env.MACHINE_OS }} --release	
+      - name: Copy essentials to Windows artifacs (Release)
+        run: |
+          cp -Path ${{ github.workspace }}/build_dependencies/windows/* ${{ github.workspace }}/build/windows/runner/Release/
+          mkdir ${{ github.workspace }}/build/windows/runner/minecraft_cube_desktop/minecraft_cube_desktop
+          mv -Path ${{ github.workspace }}/build/windows/runner/Release/* ${{ github.workspace }}/build/windows/runner/minecraft_cube_desktop/minecraft_cube_desktop
+      - name: Upload Windows artifaces (Release)
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-release-${{ inputs.postfix }}
+          path: ${{ github.workspace }}/build/windows/runner/minecraft_cube_desktop
