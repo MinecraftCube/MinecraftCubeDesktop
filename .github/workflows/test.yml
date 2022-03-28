@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'releases-**'
     paths:
       - '.github/workflows/build.yml'
       - '.github/workflows/build_**.yml'
