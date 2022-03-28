@@ -4,6 +4,8 @@
 
 ### Added
 
+## [0.0.1] - 2022-03-28
+
 - Support public ip by [ipify](https://www.ipify.org/)
 - Support internal interface and internel ips
 - Support gateway ip
@@ -17,8 +19,6 @@
 - Support installer crafting and form validation
 - Basic about page
 - App update reminder
-
-## [0.0.1] - 2022-03-27
 
 ### Added
 
