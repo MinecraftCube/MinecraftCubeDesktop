@@ -16,6 +16,7 @@
 - Support advanced properties for project (including portable java, java basic arguments)
 - Support installer crafting and form validation
 - Basic about page
+- App update reminder
 
 ## [0.0.1] - 2022-03-27
 
