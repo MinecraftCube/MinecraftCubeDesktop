@@ -49,6 +49,9 @@ dependencies:
   # overlay_builder: ^1.1.0
   # flutter_portal: ^0.4.0
   group_button: ^4.6.0
+  badges: ^2.0.2
+  flutter_markdown: ^0.6.9+1
+
 
   flutter_localizations:
     sdk: flutter
@@ -66,6 +69,8 @@ dependencies:
   url_launcher: ^6.0.20
 
   #project
+  app_updater_repository:
+    path: ./packages/app_updater_repository
   console_repository:
     path: ./packages/console_repository
   cube_api:

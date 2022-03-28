@@ -1,9 +1,7 @@
 import 'package:app_updater_repository/app_updater_repository.dart';
 import 'package:dio/dio.dart';
-import 'package:file/file.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:path/path.dart' as p;
 
 class MockDio extends Mock implements Dio {}
 

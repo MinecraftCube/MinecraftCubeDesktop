@@ -19,5 +19,5 @@ extension Localization on String {
     },
   );
 
-  String get i18n => localize(this, _t);
+  String get ci18n => localize(this, _t);
 }

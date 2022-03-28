@@ -1,3 +1,4 @@
+import 'package:app_updater_repository/app_updater_repository.dart';
 import 'package:console_repository/console_repository.dart';
 import 'package:cube_api/cube_api.dart';
 import 'package:cube_properties_repository/cube_properties_repository.dart';
@@ -96,6 +97,9 @@ void main(List<String> args) async {
     fileSystem: fileSystem,
   );
 
+  final AppUpdaterRepository appUpdaterRepository =
+      AppUpdaterRepository(dio: dio);
+
   if (!isProduction || args.contains('-dev')) {
     final absoluteProjectDir = fileSystem.currentDirectory.absolute;
     // Prevent Hot Restart from bug
@@ -127,6 +131,7 @@ void main(List<String> args) async {
       consoleRepository: consoleRepository,
       serverPropertiesRepository: serverPropertiesRepository,
       installerCreatorRepository: installerCreatorRepository,
+      appUpdaterRepository: appUpdaterRepository,
     ),
   );
   await DesktopWindow.setWindowSize(const Size(1400, 900));
