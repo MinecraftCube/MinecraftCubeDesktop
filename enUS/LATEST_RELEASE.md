@@ -1,6 +1,6 @@
 ## MinecraftCube 0.0.0 - 2022/03/27
 
-### 新增
+### Add
 
 - Support public ip by [ipify](https://www.ipify.org/)
 - Support internal interface and internel ips
