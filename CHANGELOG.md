@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.0.2] - 2022-03-28
+
 ### Added
 
 - Windows/Macos Icon, [Linux someday](https://docs.flutter.dev/deployment/linux).
@@ -26,7 +28,7 @@
 
 ### Added
 
-[unreleased]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.1...HEAD
+[unreleased]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.2...HEAD
 
 <!-- [1.1.0]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.3.0...v1.0.0
@@ -38,9 +40,9 @@
 [0.0.6]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.5...v0.0.6
 [0.0.5]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.3...v0.0.4
-[0.0.3]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.2...v0.0.3
-[0.0.2]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.1...v0.0.2 -->
+[0.0.3]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.2...v0.0.3 -->
 
+[0.0.2]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/tag/v0.0.1
 
 <!--
