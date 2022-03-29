@@ -4,6 +4,10 @@
 
 ### Added
 
+- Windows/Macos Icon, [Linux someday](https://docs.flutter.dev/deployment/linux).
+- Dummy test for app updater repository
+- Multi Language title
+
 ## [0.0.1] - 2022-03-28
 
 - Support public ip by [ipify](https://www.ipify.org/)
