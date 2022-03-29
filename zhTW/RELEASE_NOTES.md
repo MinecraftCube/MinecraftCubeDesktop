@@ -1,4 +1,20 @@
-## 創世神魔方 0.0.0 - 2022/03/27
+## 創世神魔方 0.0.2 - 2022/03/29
+
+### 新增
+
+- 多語言標題
+- Logo
+
+### 修改
+
+- Readme
+
+**載點:**
+[Windows](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v0.0.2/windows-release-v0.0.2.zip),
+[Linux](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v0.0.2/linux-release-v0.0.2.zip),
+[MacOS](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v0.0.2/macos-release-v0.0.2.zip)
+
+## 創世神魔方 0.0.1 - 2022/03/28
 
 ### 新增
 
@@ -14,3 +30,4 @@
 - 支援 java 進階設定與指定可攜式 java
 - 製作安裝包流程
 - 基本介紹頁
+- 更新提醒
