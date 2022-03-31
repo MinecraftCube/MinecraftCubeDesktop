@@ -2,7 +2,7 @@
 
 # MinecraftCube Desktop
 
-A server management tool for Minecraft, that help players start any kind of minecraft server easier. Mainly support vanilla and forge, but mostly all kind of minecraft server without restriction. For those headache specified java server, the tool also support portable java to assign at the project you needed!
+A server management tool for Minecraft, that help players start any kind of minecraft server easier. Mainly support vanilla and forge, but mostly all kind of minecraft server without restriction. For those headache specified java server, the tool also support portable java to assign to the project you needed!
 
 [![melos](https://img.shields.io/badge/maintained%20with-melos-f700ff.svg?style=flat-square)](https://github.com/invertase/melos)
 [![GitHub license](https://img.shields.io/github/license/MinecraftCube/MinecraftCubeDesktop)](https://github.com/MinecraftCube/MinecraftCubeDesktop/blob/main/LICENSE)
