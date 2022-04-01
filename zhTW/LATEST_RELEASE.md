@@ -16,11 +16,6 @@
 - 基本介紹頁
 - 更新提醒
 
-**載點:**
-[Windows](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.0.0/windows-release-v1.0.0.zip),
-[Linux](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.0.0/linux-release-v1.0.0.zip),
-[MacOS](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.0.0/macos-release-v1.0.0.zip)
-
 <!--
 新增 for new features.
 改動 for changes in existing functionality.

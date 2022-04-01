@@ -16,6 +16,11 @@
 - Basic about page
 - App update reminder
 
+**Download:**
+[Windows](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.0.0/windows-release-v1.0.0.zip),
+[Linux](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.0.0/linux-release-v1.0.0.zip),
+[MacOS](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.0.0/macos-release-v1.0.0.zip)
+
 <!-- ## MinecraftCube 0.0.2 - 2022/03/29
 
 ### Add
