@@ -23,6 +23,7 @@ import 'package:network_repository/network_repository.dart';
 import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 import 'package:process_cleaner_repository/process_cleaner_repository.dart';
+import 'package:server_configuration_repository/server_configuration_repository.dart';
 import 'package:server_management_repository/server_management_repository.dart';
 import 'package:server_properties_repository/server_properties_repository.dart';
 import 'package:server_repository/server_repository.dart';
@@ -85,6 +86,8 @@ void main(List<String> args) async {
   final ServerRepository serverRepository =
       ServerRepository(processManager: processManager);
   final ConsoleRepository consoleRepository = ConsoleRepository();
+  final ServerConfigurationRepository serverConfigurationRepository =
+      ServerConfigurationRepository(fileSystem: fileSystem);
 
   final ServerPropertiesRepository serverPropertiesRepository =
       ServerPropertiesRepository(
@@ -132,6 +135,7 @@ void main(List<String> args) async {
       serverPropertiesRepository: serverPropertiesRepository,
       installerCreatorRepository: installerCreatorRepository,
       appUpdaterRepository: appUpdaterRepository,
+      serverConfigurationRepository: serverConfigurationRepository,
     ),
   );
   await DesktopWindow.setWindowSize(const Size(1400, 900));

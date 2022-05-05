@@ -8,6 +8,7 @@ import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/states/jar_analyzer_state.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/states/jar_dangerous_ask_state.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:server_configuration_repository/server_configuration_repository.dart';
 
 class MockState extends Mock implements IState {}
 
@@ -22,6 +23,9 @@ class MockServerMachine extends Mock implements ServerMachine {}
 
 class MockJarAnalyzerRepository extends Mock implements JarAnalyzerRepository {}
 
+class MockServerConfigurationRepository extends Mock
+    implements ServerConfigurationRepository {}
+
 void main() {
   late IState machineState;
   late IdleState idleState;
@@ -29,14 +33,21 @@ void main() {
   late ConfigurationLoaderState configurationLoaderState;
   late JarAnalyzerState state;
   late JarAnalyzerRepository repository;
+  late ServerConfigurationRepository serverConfigurationRepository;
   late ServerMachine machine;
+
+  setUpAll(() {
+    registerFallbackValue(const ServerConfiguration());
+  });
 
   setUp(() {
     machine = MockServerMachine();
     repository = MockJarAnalyzerRepository();
+    serverConfigurationRepository = MockServerConfigurationRepository();
     state = JarAnalyzerState(
       machine,
       jarAnalyzerRepository: repository,
+      serverConfigurationRepository: serverConfigurationRepository,
     );
     machineState = MockState();
     idleState = MockIdleState();
@@ -73,6 +84,13 @@ void main() {
         when(
           () => repository.analyzeDirectory(directory: any(named: 'directory')),
         ).thenAnswer((_) async => null);
+        when(
+          () => serverConfigurationRepository.getConfiguration(
+            directory: any(named: 'directory'),
+          ),
+        ).thenAnswer(
+          (_) async => const ServerConfiguration(isAgreeDangerous: false),
+        );
         await expectLater(state.start(), completes);
         verify(() => machine.addLog(any())).called(2);
         verify(() => machine.state = idleState);
@@ -84,6 +102,13 @@ void main() {
         ).thenAnswer(
           (_) async =>
               const JarArchiveInfo(type: JarType.vanilla, executable: ''),
+        );
+        when(
+          () => serverConfigurationRepository.getConfiguration(
+            directory: any(named: 'directory'),
+          ),
+        ).thenAnswer(
+          (_) async => const ServerConfiguration(isAgreeDangerous: false),
         );
         await expectLater(state.start(), completes);
         verify(() => machine.addLog(any())).called(2);
@@ -102,9 +127,42 @@ void main() {
           (_) async =>
               const JarArchiveInfo(type: JarType.unknown, executable: ''),
         );
+        when(
+          () => serverConfigurationRepository.getConfiguration(
+            directory: any(named: 'directory'),
+          ),
+        ).thenAnswer(
+          (_) async => const ServerConfiguration(isAgreeDangerous: false),
+        );
         await expectLater(state.start(), completes);
         verify(() => machine.addLog(any())).called(2);
         verify(() => machine.state = jarDangerousAskState);
+        verify(
+          () => machine.jarInfo =
+              const JarArchiveInfo(type: JarType.unknown, executable: ''),
+        );
+        // verify(() => machine.state.start()).called(1);
+      });
+      test(
+          'skip jarDangerousAskState when serverConfigurationRepository had agreed',
+          () async {
+        when(() => machine.projectPath).thenReturn('');
+        when(
+          () => repository.analyzeDirectory(directory: any(named: 'directory')),
+        ).thenAnswer(
+          (_) async =>
+              const JarArchiveInfo(type: JarType.unknown, executable: ''),
+        );
+        when(
+          () => serverConfigurationRepository.getConfiguration(
+            directory: any(named: 'directory'),
+          ),
+        ).thenAnswer(
+          (_) async => const ServerConfiguration(isAgreeDangerous: true),
+        );
+        await expectLater(state.start(), completes);
+        verify(() => machine.addLog(any())).called(2);
+        verify(() => machine.state = configurationLoaderState);
         verify(
           () => machine.jarInfo =
               const JarArchiveInfo(type: JarType.unknown, executable: ''),

@@ -22,6 +22,7 @@ import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/widgets/
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/widgets/server_creation_dialog.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/widgets/servers_dropdown.dart';
 import 'package:process_cleaner_repository/process_cleaner_repository.dart';
+import 'package:server_configuration_repository/server_configuration_repository.dart';
 import 'package:server_management_repository/server_management_repository.dart';
 import 'package:server_repository/server_repository.dart';
 
@@ -49,6 +50,8 @@ class _ServerPageState extends State<ServerPage>
       forgeInstallerRepository: context.read<ForgeInstallerRepository>(),
       serverRepository: context.read<ServerRepository>(),
       consoleRepository: context.read<ConsoleRepository>(),
+      serverConfigurationRepository:
+          context.read<ServerConfigurationRepository>(),
     );
     _installationCubit = InstallationCubit(
       installerRepository: context.read<InstallerRepository>(),

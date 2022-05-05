@@ -25,6 +25,7 @@ import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/states/pre_process_cleaner_state.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/states/server_state.dart';
 import 'package:process_cleaner_repository/process_cleaner_repository.dart';
+import 'package:server_configuration_repository/server_configuration_repository.dart';
 import 'package:server_repository/server_repository.dart';
 
 import 'package:meta/meta.dart';
@@ -40,6 +41,7 @@ class ServerMachine {
     required JavaDuplicatorRepository javaDuplicatorRepository,
     required ForgeInstallerRepository forgeInstallerRepository,
     required ServerRepository serverRepository,
+    required ServerConfigurationRepository serverConfigurationRepository,
     required ConsoleRepository consoleRepository,
   })  : _logController = StreamController<Iterable<ConsoleLine>>(),
         _stateController = StreamController<IState>(),
@@ -58,9 +60,15 @@ class ServerMachine {
         EulaStageState(this, eulaStageRepository: eulaStageRepository);
     eulaAskState = EulaAskState(this, eulaStageRepository: eulaStageRepository);
 
-    jarAnalyzerState =
-        JarAnalyzerState(this, jarAnalyzerRepository: jarAnalyzerRepository);
-    jarDangerousAskState = JarDangerousAskState(this);
+    jarAnalyzerState = JarAnalyzerState(
+      this,
+      jarAnalyzerRepository: jarAnalyzerRepository,
+      serverConfigurationRepository: serverConfigurationRepository,
+    );
+    jarDangerousAskState = JarDangerousAskState(
+      this,
+      serverConfigurationRepository: serverConfigurationRepository,
+    );
     configurationLoaderState = ConfigurationLoaderState(
       this,
       cubePropertiesRepository: cubePropertiesRepository,

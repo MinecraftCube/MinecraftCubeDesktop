@@ -15,6 +15,7 @@ import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/states/istate.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:process_cleaner_repository/process_cleaner_repository.dart';
+import 'package:server_configuration_repository/server_configuration_repository.dart';
 import 'package:server_repository/server_repository.dart';
 
 class MockProcessCleanerRepository extends Mock
@@ -40,6 +41,9 @@ class MockForgeInstallerRepository extends Mock
 
 class MockServerRepository extends Mock implements ServerRepository {}
 
+class MockServerConfigurationRepository extends Mock
+    implements ServerConfigurationRepository {}
+
 class MockConsoleRepository extends Mock implements ConsoleRepository {}
 
 class MockCubeProperties extends Mock implements CubeProperties {}
@@ -55,6 +59,7 @@ void main() {
   late JavaPrinterRepository javaPrinterRepository;
   late JavaDuplicatorRepository javaDuplicatorRepository;
   late ForgeInstallerRepository forgeInstallerRepository;
+  late ServerConfigurationRepository serverConfigurationRepository;
   late ServerRepository serverRepository;
   late ConsoleRepository consoleRepository;
   setUp(() {
@@ -66,6 +71,7 @@ void main() {
     javaPrinterRepository = MockJavaPrinterRepository();
     javaDuplicatorRepository = MockJavaDuplicatorRepository();
     forgeInstallerRepository = MockForgeInstallerRepository();
+    serverConfigurationRepository = MockServerConfigurationRepository();
     serverRepository = MockServerRepository();
     consoleRepository = MockConsoleRepository();
     when(() => processCleanerRepository.killJavaProcesses())
@@ -84,6 +90,11 @@ void main() {
       (_) async =>
           const JarArchiveInfo(type: JarType.vanilla, executable: 'nope.jar'),
     );
+    when(
+      () => serverConfigurationRepository.getConfiguration(
+        directory: any(named: 'directory'),
+      ),
+    ).thenAnswer((_) async => const ServerConfiguration());
     when(
       () => cubePropertiesRepository.getCubeProperties(
         directory: any(named: 'directory'),
@@ -136,6 +147,7 @@ void main() {
           forgeInstallerRepository: forgeInstallerRepository,
           serverRepository: serverRepository,
           consoleRepository: consoleRepository,
+          serverConfigurationRepository: serverConfigurationRepository,
         );
         expect(machine.state, isA<IdleState>());
         expect(machine.idleState, isNotNull);
@@ -168,6 +180,7 @@ void main() {
           forgeInstallerRepository: forgeInstallerRepository,
           serverRepository: serverRepository,
           consoleRepository: consoleRepository,
+          serverConfigurationRepository: serverConfigurationRepository,
         );
 
         machine.logStream.listen(
@@ -195,6 +208,7 @@ void main() {
           forgeInstallerRepository: forgeInstallerRepository,
           serverRepository: serverRepository,
           consoleRepository: consoleRepository,
+          serverConfigurationRepository: serverConfigurationRepository,
         );
 
         final fakeState = MockFakeState();
@@ -224,6 +238,7 @@ void main() {
           forgeInstallerRepository: forgeInstallerRepository,
           serverRepository: serverRepository,
           consoleRepository: consoleRepository,
+          serverConfigurationRepository: serverConfigurationRepository,
         );
 
         when(() => processCleanerRepository.killJavaProcesses())
@@ -247,6 +262,7 @@ void main() {
           forgeInstallerRepository: forgeInstallerRepository,
           serverRepository: serverRepository,
           consoleRepository: consoleRepository,
+          serverConfigurationRepository: serverConfigurationRepository,
         );
 
         expect(machine.stableStream, emitsInOrder([false, false, true]));

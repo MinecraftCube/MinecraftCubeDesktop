@@ -5,11 +5,16 @@ const appSelectorPageTypeInfo = 'appSelectorPageTypeInfo';
 const appSelectorPageTypeServer = 'appSelectorPageTypeServer';
 const appSelectorPageTypeCraft = 'appSelectorPageTypeCraft';
 const appSelectorPageTypeAbout = 'appSelectorPageTypeAbout';
+const appTitle = 'appTitle';
 
 extension Localization on String {
   static final _t = Translations.from(
     AppLocalization.enUS.name,
     {
+      appTitle: {
+        AppLocalization.enUS.name: 'Minecraft Cube',
+        AppLocalization.zhTW.name: '創世神魔方',
+      },
       appSelectorPageTypeInfo: {
         AppLocalization.enUS.name: 'Info',
         AppLocalization.zhTW.name: '資訊欄',

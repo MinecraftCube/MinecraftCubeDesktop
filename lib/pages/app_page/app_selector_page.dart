@@ -5,6 +5,7 @@ import 'package:minecraft_cube_desktop/pages/app_page/pages/craft_page/craft_pag
 import 'package:minecraft_cube_desktop/pages/app_page/pages/info_page/info_page.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/server_page.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/widgets/app_selector.dart';
+import 'package:window_size/window_size.dart' as appWindow;
 
 import 'app_selector_page.i18n.dart';
 
@@ -95,6 +96,7 @@ class _AppSelectorPageState extends State<AppSelectorPage> {
 
   @override
   Widget build(BuildContext context) {
+    appWindow.setWindowTitle(appTitle.i18n);
     return Scaffold(
       backgroundColor: ColorPalette.bgColor,
       body: Row(

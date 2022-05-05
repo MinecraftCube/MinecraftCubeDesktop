@@ -9,7 +9,7 @@ part of 'installer.dart';
 Installer _$InstallerFromJson(Map<String, dynamic> json) => Installer(
       json['name'] as String,
       json['description'] as String,
-      _$enumDecode(_$JarTypeEnumMap, json['type']),
+      $enumDecode(_$JarTypeEnumMap, json['type']),
       json['serverPath'] as String,
       mapZipPath: json['mapZipPath'] as String?,
       modelSettings: (json['modelSettings'] as List<dynamic>?)
@@ -30,32 +30,6 @@ Map<String, dynamic> _$InstallerToJson(Installer instance) => <String, dynamic>{
       'modelPack': instance.modelPack,
       'mapZipPath': instance.mapZipPath,
     };
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
 
 const _$JarTypeEnumMap = {
   JarType.vanilla: 'vanilla',

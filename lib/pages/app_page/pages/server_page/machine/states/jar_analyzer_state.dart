@@ -4,13 +4,16 @@ import 'package:minecraft_cube_desktop/_utilities/console_line_util.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/server_machine.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/states/istate.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/machine/states/jar_analyzer_state.i18n.dart';
+import 'package:server_configuration_repository/server_configuration_repository.dart';
 
 class JarAnalyzerState extends IState {
   JarAnalyzerState(
     ServerMachine machine, {
     required this.jarAnalyzerRepository,
+    required this.serverConfigurationRepository,
   }) : super(machine: machine);
   final JarAnalyzerRepository jarAnalyzerRepository;
+  final ServerConfigurationRepository serverConfigurationRepository;
 
   @override
   Future<void> start() async {
@@ -24,6 +27,8 @@ class JarAnalyzerState extends IState {
       if (path != null) {
         final jarArchiveInfo =
             await jarAnalyzerRepository.analyzeDirectory(directory: path);
+        final configuration = await serverConfigurationRepository
+            .getConfiguration(directory: path);
         if (jarArchiveInfo != null) {
           machine.jarInfo = jarArchiveInfo;
           machine.addLog(
@@ -31,7 +36,8 @@ class JarAnalyzerState extends IState {
               jarAnalyzerSuccess.i18n,
             ),
           );
-          if (jarArchiveInfo.type == JarType.unknown) {
+          if (jarArchiveInfo.type == JarType.unknown &&
+              configuration?.isAgreeDangerous != true) {
             machine.state = machine.jarDangerousAskState;
             return;
           }

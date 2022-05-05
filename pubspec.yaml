@@ -105,6 +105,8 @@ dependencies:
     path: ./packages/picker_repository
   process_cleaner_repository:
     path: ./packages/process_cleaner_repository
+  server_configuration_repository:
+    path: ./packages/server_configuration_repository
   server_management_repository:
     path: ./packages/server_management_repository
   server_properties_repository:

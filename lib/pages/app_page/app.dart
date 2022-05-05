@@ -18,16 +18,15 @@ import 'package:launcher_repository/launcher_repository.dart';
 import 'package:locale_repository/locale_repository.dart';
 import 'package:minecraft_cube_desktop/_consts/localization.dart';
 import 'package:minecraft_cube_desktop/_theme/color_palette.dart';
-import 'package:minecraft_cube_desktop/pages/app_page/app.i18n.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/app_selector_page.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/bloc/locale_bloc.dart';
 import 'package:network_repository/network_repository.dart';
 import 'package:process_cleaner_repository/process_cleaner_repository.dart';
+import 'package:server_configuration_repository/server_configuration_repository.dart';
 import 'package:server_management_repository/server_management_repository.dart';
 import 'package:server_properties_repository/server_properties_repository.dart';
 import 'package:server_repository/server_repository.dart';
 import 'package:system_repository/system_repository.dart';
-import 'package:window_size/window_size.dart' as appWindow;
 
 class CubeApp extends StatelessWidget {
   const CubeApp({
@@ -51,6 +50,7 @@ class CubeApp extends StatelessWidget {
     required this.serverPropertiesRepository,
     required this.installerCreatorRepository,
     required this.appUpdaterRepository,
+    required this.serverConfigurationRepository,
     Key? key,
   }) : super(key: key);
   final LocaleRepository localeRepository;
@@ -73,6 +73,7 @@ class CubeApp extends StatelessWidget {
   final ServerPropertiesRepository serverPropertiesRepository;
   final InstallerCreatorRepository installerCreatorRepository;
   final AppUpdaterRepository appUpdaterRepository;
+  final ServerConfigurationRepository serverConfigurationRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +122,9 @@ class CubeApp extends StatelessWidget {
         RepositoryProvider.value(
           value: serverRepository,
         ),
+        RepositoryProvider.value(
+          value: serverConfigurationRepository,
+        ),
         RepositoryProvider.value(value: consoleRepository),
         RepositoryProvider.value(value: serverPropertiesRepository),
         RepositoryProvider.value(value: installerCreatorRepository),
@@ -156,7 +160,6 @@ class _CubeAppViewState extends State<CubeAppView> {
   Widget build(BuildContext context) {
     return BlocBuilder<LocaleBloc, LocaleState>(
       builder: (context, state) {
-        appWindow.setWindowTitle(appTitle.i18n);
         return MaterialApp(
           locale: state.locale,
           localizationsDelegates: const [
