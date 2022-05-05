@@ -9,6 +9,12 @@ A server management tool for Minecraft, that help players start any kind of mine
 ![GitHub Workflow Status (branch)](<https://img.shields.io/github/workflow/status/MinecraftCube/MinecraftCubeDesktop/Test%20(All%20platform)/main>)
 [![downloads](https://img.shields.io/github/downloads/MinecraftCube/MinecraftCubeDesktop/total)](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases)
 
+
+## Showcase
+**Open CC for subtitles (Eng/Zh)**
+
+[![](https://img.youtube.com/vi/8z0MQDwb8EE/0.jpg)](https://www.youtube.com/watch?v=8z0MQDwb8EE)
+
 ## Features
 
 - [x] Cross platform (Mac, Windows, Linux)
