@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2022-05-05
+
+### Added
+
+- Allow user to ignore dangerous asking when user had agreed.
+
+### Fixed
+
+- Fix wrong language bug on title
+
 ## [1.0.0] - 2022-03-31
 
 - Bump version to 1.0.0
