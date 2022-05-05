@@ -1,3 +1,18 @@
+## 創世神魔方 1.1.0 - 2022/05/05
+
+### 新增
+
+- 允許使用者在危險 Jar 警示在同意過後，不再詢問。
+
+### 修復
+
+- 語言切換使標題不同步導致錯誤問題。
+
+**載點:**
+[Windows](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.1.0/windows-release-v1.1.0.zip),
+[Linux](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.1.0/linux-release-v1.1.0.zip),
+[MacOS](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.1.0/macos-release-v1.1.0.zip)
+
 ## 創世神魔方 1.0.0 - 2022/03/31
 
 ### 新增

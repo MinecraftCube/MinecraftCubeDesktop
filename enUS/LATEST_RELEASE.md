@@ -1,20 +1,12 @@
-## MinecraftCube 1.0.0 - 2022/03/31
+## MinecraftCube 1.1.0 - 2022/05/05
 
 ### Add
 
-- Support public ip by [ipify](https://www.ipify.org/)
-- Support internal interface and internel ips
-- Support gateway ip
-- Support cpu, mem, gpu infos
-- Support system/portable java detection
-- Support server machine for starting minecraft server
-- Support auto installtion for installer (.dmc)
-- Support command candidates
-- Support server properties for project
-- Support advanced properties for project (including portable java, java basic arguments)
-- Support installer crafting and form validation
-- Basic about page
-- App update reminder
+- Ignoring jar-dangerous asking by allowing once.
+
+### Fix
+
+- Title language is now synced with language changed.
 
 <!-- Added for new features.
 Changed for changes in existing functionality.

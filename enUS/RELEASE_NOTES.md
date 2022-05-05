@@ -1,3 +1,18 @@
+## MinecraftCube 1.1.0 - 2022/05/05
+
+### Add
+
+- Ignoring jar-dangerous asking by allowing once.
+
+### Fix
+
+- Title language is now synced with language changed.
+
+**Download:**
+[Windows](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.1.0/windows-release-v1.1.0.zip),
+[Linux](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.1.0/linux-release-v1.1.0.zip),
+[MacOS](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.1.0/macos-release-v1.1.0.zip)
+
 ## MinecraftCube 1.0.0 - 2022/03/31
 
 ### Add
