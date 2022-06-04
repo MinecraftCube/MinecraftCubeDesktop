@@ -34,7 +34,7 @@ void main() {
       });
 
       test('throws DioError by wrong github fetching', () async {
-        when(() => dio.get(captureAny()))
+        when(() => dio.get<String>(captureAny()))
             .thenThrow(DioError(requestOptions: RequestOptions(path: '')));
         expect(
           () => repository.hasGreaterVersion(version: '1.2.3'),
@@ -42,7 +42,7 @@ void main() {
         );
 
         expect(
-          verify(() => dio.get(captureAny())).captured,
+          verify(() => dio.get<String>(captureAny())).captured,
           [
             'https://raw.githubusercontent.com/MinecraftCube/MinecraftCubeDesktop/version_info/version'
           ],
@@ -51,7 +51,7 @@ void main() {
 
       test('return false when data is null', () async {
         final Response<String> response = MockResponse<String>();
-        when(() => dio.get(any())).thenAnswer((_) async => response);
+        when(() => dio.get<String>(any())).thenAnswer((_) async => response);
         when(() => response.data).thenReturn(null);
 
         expect(
@@ -62,7 +62,7 @@ void main() {
 
       test('throws FormatException by unexpected online version', () async {
         final Response<String> response = MockResponse<String>();
-        when(() => dio.get(any())).thenAnswer((_) async => response);
+        when(() => dio.get<String>(any())).thenAnswer((_) async => response);
         when(() => response.data).thenReturn('sakjdasksaj');
 
         expect(
@@ -74,7 +74,7 @@ void main() {
       test('return true when online version is greater than app version',
           () async {
         final Response<String> response = MockResponse<String>();
-        when(() => dio.get(any())).thenAnswer((_) async => response);
+        when(() => dio.get<String>(any())).thenAnswer((_) async => response);
         when(() => response.data).thenReturn('1.2.4');
 
         expect(
@@ -88,7 +88,7 @@ void main() {
       test(
         'throws DioError when there is no release note for specified country&lang.',
         () {
-          when(() => dio.get(captureAny()))
+          when(() => dio.get<String>(captureAny()))
               .thenThrow(DioError(requestOptions: RequestOptions(path: '')));
           expect(
             () => repository.getLatestRelease(fullLocale: 'test'),
@@ -101,7 +101,7 @@ void main() {
         'return null',
         () async {
           final Response<String> response = MockResponse<String>();
-          when(() => dio.get(any())).thenAnswer((_) async => response);
+          when(() => dio.get<String>(any())).thenAnswer((_) async => response);
           when(() => response.data).thenReturn(null);
           expect(
             await repository.getLatestRelease(fullLocale: 'test'),
@@ -114,7 +114,7 @@ void main() {
         'return content',
         () async {
           final Response<String> response = MockResponse<String>();
-          when(() => dio.get(any())).thenAnswer((_) async => response);
+          when(() => dio.get<String>(any())).thenAnswer((_) async => response);
           when(() => response.data).thenReturn('markdownContent');
           expect(
             await repository.getLatestRelease(fullLocale: 'test'),
