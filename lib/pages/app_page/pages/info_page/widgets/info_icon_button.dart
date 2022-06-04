@@ -17,6 +17,7 @@ class InfoIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       constraints: const BoxConstraints(minWidth: 48),
+      onPressed: onPressed,
       child: Row(
         children: <Widget>[
           Container(
@@ -40,7 +41,6 @@ class InfoIconButton extends StatelessWidget {
           )
         ],
       ),
-      onPressed: onPressed,
     );
   }
 }

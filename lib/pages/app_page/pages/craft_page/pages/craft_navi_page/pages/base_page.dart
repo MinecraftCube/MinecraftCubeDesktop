@@ -149,13 +149,13 @@ class BasePageNextButton extends StatelessWidget {
           return scheme.primary;
         }),
       ),
+      onPressed: onNext,
       child: Text(
         nextButtonName ?? craftBasePageNext.i18n,
         style: headerBtnStyle?.copyWith(
           color: scheme.onPrimary,
         ),
       ),
-      onPressed: onNext,
     );
   }
 }

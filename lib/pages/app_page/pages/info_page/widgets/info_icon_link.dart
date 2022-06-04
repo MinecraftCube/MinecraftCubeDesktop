@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:launcher_repository/launcher_repository.dart';
 
 class InfoIconLink extends StatelessWidget {
   const InfoIconLink({
@@ -40,8 +41,9 @@ class InfoIconLink extends StatelessWidget {
         ],
       ),
       onPressed: () async {
-        if (await canLaunch(url)) {
-          await launch(url);
+        final launcher = context.read<LauncherRepository>();
+        if (await launcher.canLaunch(path: url)) {
+          await launcher.launch(path: url);
         }
       },
     );

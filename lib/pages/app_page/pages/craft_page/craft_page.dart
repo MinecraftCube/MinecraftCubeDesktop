@@ -146,7 +146,7 @@ class CraftIntroPageState extends State<CraftIntroPage> {
             unselectedTextStyle: textTheme.headline6,
           ),
           controller: _controller,
-          onSelected: (index, isSelected) {
+          onSelected: (_, index, __) {
             setState(() {
               _controller.selectIndex(index);
             });

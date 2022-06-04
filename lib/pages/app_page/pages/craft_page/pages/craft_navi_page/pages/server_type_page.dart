@@ -22,7 +22,7 @@ class ServerTypeNaviPage extends NaviPageStatefulWidget {
         );
 
   @override
-  _ServerTypeNaviPageState createState() => _ServerTypeNaviPageState();
+  State createState() => _ServerTypeNaviPageState();
 }
 
 class _ServerTypeNaviPageState extends State<ServerTypeNaviPage>
@@ -94,11 +94,11 @@ class _ServerTypeNaviPageState extends State<ServerTypeNaviPage>
             items: [JarType.vanilla, JarType.forgeInstaller]
                 .map<DropdownMenuItem<JarType>>((value) {
               return DropdownMenuItem<JarType>(
+                value: value,
                 child: Text(
                   value == JarType.forgeInstaller ? 'Forge' : 'Vanilla',
                   textAlign: TextAlign.right,
                 ),
-                value: value,
               );
             }).toList(),
             onChanged: (value) {

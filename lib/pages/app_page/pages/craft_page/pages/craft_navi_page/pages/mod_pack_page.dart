@@ -28,7 +28,7 @@ class ModpackNaviPage extends NaviPageStatefulWidget {
   final VoidCallback onSwitchMode;
 
   @override
-  _ModpackNaviPageState createState() => _ModpackNaviPageState();
+  State createState() => _ModpackNaviPageState();
 }
 
 class _ModpackNaviPageState extends State<ModpackNaviPage> {
@@ -92,7 +92,7 @@ class _ModpackNaviPageState extends State<ModpackNaviPage> {
           GroupButton(
             controller: _groupButtonController,
             buttons: ModelSettingType.values.map((e) => e.name).toList(),
-            onSelected: (index, selected) {
+            onSelected: (_, index, __) {
               if (index != currentMode.index) {
                 widget.onSwitchMode();
                 _groupButtonController.selectIndex(currentMode.index);

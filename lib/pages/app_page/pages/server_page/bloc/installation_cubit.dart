@@ -132,6 +132,7 @@ class InstallationCubit extends Cubit<InstallationState> {
           ),
         ),
       );
+      // ignore: no_leading_underscores_for_local_identifiers
       await for (final _ in installerRepository.installMap(
         url: mapPath,
         projectName: projectName,
@@ -153,6 +154,7 @@ class InstallationCubit extends Cubit<InstallationState> {
             ),
           ),
         );
+        // ignore: no_leading_underscores_for_local_identifiers
         await for (final _ in installerRepository.installMod(
           url: mod.path,
           modName: mod.program,
@@ -172,6 +174,7 @@ class InstallationCubit extends Cubit<InstallationState> {
           ),
         ),
       );
+      // ignore: no_leading_underscores_for_local_identifiers
       await for (final _ in installerRepository.installModpack(
         url: modpack.path,
         projectName: projectName,
@@ -187,6 +190,7 @@ class InstallationCubit extends Cubit<InstallationState> {
         ),
       ),
     );
+    // ignore: no_leading_underscores_for_local_identifiers
     await for (final _ in installerRepository.installServer(
       url: serverPath,
       projectName: projectName,

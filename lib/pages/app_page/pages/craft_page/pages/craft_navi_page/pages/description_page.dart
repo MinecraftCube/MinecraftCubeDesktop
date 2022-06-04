@@ -20,7 +20,7 @@ class DescriptionNaviPage extends NaviPageStatefulWidget {
           // bloc: bloc,
         );
   @override
-  _DescriptionNaviPageState createState() => _DescriptionNaviPageState();
+  State createState() => _DescriptionNaviPageState();
 }
 
 class _DescriptionNaviPageState extends State<DescriptionNaviPage> {

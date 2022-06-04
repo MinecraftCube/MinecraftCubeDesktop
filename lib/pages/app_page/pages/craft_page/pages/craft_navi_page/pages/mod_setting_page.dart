@@ -27,7 +27,7 @@ class ModelSettingNaviPage extends NaviPageStatefulWidget {
   final VoidCallback onSwitchMode;
 
   @override
-  _ModelSettingNaviPageState createState() => _ModelSettingNaviPageState();
+  State createState() => _ModelSettingNaviPageState();
 }
 
 enum ModelSettingType { detail, pack }
@@ -107,7 +107,7 @@ class _ModelSettingNaviPageState extends State<ModelSettingNaviPage> {
           GroupButton(
             controller: _groupButtonController,
             buttons: ModelSettingType.values.map((e) => e.name).toList(),
-            onSelected: (index, selected) {
+            onSelected: (_, index, __) {
               if (index != currentMode.index) {
                 widget.onSwitchMode();
                 _groupButtonController.selectIndex(currentMode.index);

@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:cube_api/cube_api.dart';
 import 'package:cube_properties_repository/cube_properties_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:java_info_repository/java_info_repository.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/consts/app_cube_properties.dart';
 import 'package:collection/collection.dart';

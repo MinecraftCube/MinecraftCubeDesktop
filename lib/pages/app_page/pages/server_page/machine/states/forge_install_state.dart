@@ -26,6 +26,7 @@ class ForgeInstallState extends IState {
       final executable = machine.executable;
       if (jarInfo != null && executable != null) {
         int count = 0;
+        // ignore: no_leading_underscores_for_local_identifiers
         await for (final _ in forgeInstallRepository.installForge(
           javaExecutablePath: executable,
           jarArchiveInfo: jarInfo,

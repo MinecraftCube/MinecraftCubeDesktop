@@ -15,6 +15,10 @@ command:
     workspaceChangelog: true
 
 scripts:
+  upgrade:all:
+    run: flutter pub run melos exec -c 1 -- \
+      dart pub upgrade --major-versions
+
   lint:all:
     run: flutter pub run melos run analyze && flutter pub run melos run format
     description: Run all static analysis checks.

@@ -28,7 +28,7 @@ import 'package:server_management_repository/server_management_repository.dart';
 import 'package:server_properties_repository/server_properties_repository.dart';
 import 'package:server_repository/server_repository.dart';
 import 'package:system_repository/system_repository.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 void main(List<String> args) async {
   const isProduction = bool.fromEnvironment('dart.vm.product');
@@ -53,7 +53,7 @@ void main(List<String> args) async {
     propertyManager: propertyManager,
   );
   const LauncherRepository launcherRepository =
-      LauncherRepository(canLaunch, launch);
+      LauncherRepository(canLaunchUrlString, launchUrlString);
 
   final JarAnalyzerRepository jarAnalyzerRepository =
       JarAnalyzerRepository(fileSystem: fileSystem, archiver: archiver);

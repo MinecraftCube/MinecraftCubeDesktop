@@ -22,7 +22,7 @@ class MapDownloadNaviPage extends NaviPageStatefulWidget {
           // bloc: bloc,
         );
   @override
-  _MapDownloadNaviPageState createState() => _MapDownloadNaviPageState();
+  State createState() => _MapDownloadNaviPageState();
 }
 
 class _MapDownloadNaviPageState extends State<MapDownloadNaviPage>

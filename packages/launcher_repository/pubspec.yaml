@@ -19,10 +19,10 @@ dependencies:
       ref: 9a9b873604a0c8f58d1419e160146885fd8392b6
   test_utilities:
     path: ../test_utilities
-  url_launcher: ^6.0.20
+  url_launcher: ^6.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.4
-  mocktail: ^0.2.0
+  flutter_lints: ^2.0.1
+  mocktail: ^0.3.0

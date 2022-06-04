@@ -233,7 +233,7 @@ void main() {
           final content = FORGE_EULA_FAILURE['content'] as String;
           expect(
             collects.join('\n'),
-            equals(content + '\nSafe Complete!'),
+            equals('$content\nSafe Complete!'),
           );
         });
 
@@ -436,7 +436,7 @@ void main() {
           final content = VANILLA_EULA_FAILURE['content'] as String;
           expect(
             collects.join('\n'),
-            equals(content + '\nSafe Complete!'),
+            equals('$content\nSafe Complete!'),
           );
         });
 
@@ -602,15 +602,14 @@ void main() {
               cubeProperties.java,
               '-Xmx${cubeProperties.xmx}',
               '-Xms${cubeProperties.xms}',
-              '@' +
-                  p.join(
-                    'libraries',
-                    'net',
-                    'minecraftforge',
-                    'forge',
-                    '1.18.2-40.1.30',
-                    'win_args.txt',
-                  ),
+              '@${p.join(
+                'libraries',
+                'net',
+                'minecraftforge',
+                'forge',
+                '1.18.2-40.1.30',
+                'win_args.txt',
+              )}',
               'nogui',
             ],
             true,
@@ -673,7 +672,7 @@ void main() {
           final content = FORGE_EULA_FAILURE['content'] as String;
           expect(
             collects.join('\n'),
-            equals(content + '\nSafe Complete!'),
+            equals('$content\nSafe Complete!'),
           );
         });
 

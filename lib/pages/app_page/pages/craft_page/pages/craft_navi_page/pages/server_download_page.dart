@@ -23,7 +23,7 @@ class ServerDownloadNaviPage extends NaviPageStatefulWidget {
         );
 
   @override
-  _ServerDownloadNaviPageState createState() => _ServerDownloadNaviPageState();
+  State createState() => _ServerDownloadNaviPageState();
 }
 
 class _ServerDownloadNaviPageState extends State<ServerDownloadNaviPage>

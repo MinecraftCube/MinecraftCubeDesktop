@@ -263,10 +263,10 @@ class _EnumIntPropertyListTileState extends State<EnumIntPropertyListTile> {
                 (e) => DropdownMenuItem<int>(
                   value: e.key,
                   child: Align(
+                    alignment: Alignment.centerRight,
                     child: Text(
                       e.value,
                     ),
-                    alignment: Alignment.centerRight,
                   ),
                 ),
               )
@@ -319,10 +319,10 @@ class _EnumStringPropertyListTileState
                 (e) => DropdownMenuItem<String>(
                   value: e.value,
                   child: Align(
+                    alignment: Alignment.centerRight,
                     child: Text(
                       e.key,
                     ),
-                    alignment: Alignment.centerRight,
                   ),
                 ),
               )

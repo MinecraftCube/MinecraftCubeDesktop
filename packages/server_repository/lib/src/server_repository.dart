@@ -29,7 +29,7 @@ class ServerRepository {
     const javaExecuteArg = '-jar';
     final serverExecutable = p.basename(jarArchiveInfo.executable);
     final forgeTxtArguments =
-        '@' + p.relative(jarArchiveInfo.executable, from: projectPath);
+        '@${p.relative(jarArchiveInfo.executable, from: projectPath)}';
     const serverArgument = 'nogui';
 
     // Don't use const, const means unmodifiable list.

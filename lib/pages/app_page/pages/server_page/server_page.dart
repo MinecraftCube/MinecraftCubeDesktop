@@ -338,11 +338,6 @@ class _ServerActionSectionState extends State<ServerActionSection> {
                       }
                     }
                   : null,
-              child: Text(
-                stableEnable
-                    ? serverPageServerStop.i18n
-                    : serverPageServerStart.i18n,
-              ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith((states) {
                   if (states.contains(MaterialState.disabled)) {
@@ -353,6 +348,11 @@ class _ServerActionSectionState extends State<ServerActionSection> {
                     return Colors.green;
                   }
                 }),
+              ),
+              child: Text(
+                stableEnable
+                    ? serverPageServerStop.i18n
+                    : serverPageServerStart.i18n,
               ),
             ),
             // gap,

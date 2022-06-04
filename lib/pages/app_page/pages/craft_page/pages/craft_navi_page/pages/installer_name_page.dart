@@ -22,7 +22,7 @@ class InstallerNameNaviPage extends NaviPageStatefulWidget {
         );
 
   @override
-  _InstallerNameNaviPageState createState() => _InstallerNameNaviPageState();
+  State createState() => _InstallerNameNaviPageState();
 }
 
 class _InstallerNameNaviPageState extends State<InstallerNameNaviPage> {

@@ -54,7 +54,7 @@ class ServerRunState extends IState {
       }
       machine.addLog(
         generateOneLineConsoleLine(
-          serverStateUnexpectedFailure.i18n + '(1)',
+          '${serverStateUnexpectedFailure.i18n}(1)',
         ),
       );
     } on ServerCloseUnexpectedException {

@@ -20,7 +20,7 @@ class PreviewBuildPage extends NaviPageStatefulWidget {
         );
 
   @override
-  _PreviewNaviPageState createState() => _PreviewNaviPageState();
+  State createState() => _PreviewNaviPageState();
 }
 
 class _PreviewNaviPageState extends State<PreviewBuildPage> {

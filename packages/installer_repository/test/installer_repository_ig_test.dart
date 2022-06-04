@@ -183,7 +183,7 @@ void main() {
         final List<SetupStatus> collects = [];
         await repository.createProject(projectName: projectName);
         repository
-            .installMap(projectName: projectName, url: url + 'corrupted_url')
+            .installMap(projectName: projectName, url: '${url}corrupted_url')
             .listen(
               (event) {
                 collects.add(event);
