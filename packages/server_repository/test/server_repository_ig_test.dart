@@ -501,7 +501,15 @@ void main() {
               expect(
                 collects.join('\n'),
                 // contains(RegExp(r'@.*_args.txt')),
-                contains('FormatException'),
+                anyOf(
+                  contains('FormatException'), // Not english
+                  contains(
+                    'unix_args.txt',
+                  ), // Error: Could not find or load main class @libraries.net.minecraftforge.forge.1.18.2-40.1.30.unix_args.txt\n
+                  contains(
+                    'win_args.txt',
+                  ), // Error: Could not find or load main class @libraries.net.minecraftforge.forge.1.18.2-40.1.30.win_args.txt\n
+                ),
               );
 
               // Not sure why need a 5 secs delay on this case
