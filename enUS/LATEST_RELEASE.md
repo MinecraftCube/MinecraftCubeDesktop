@@ -2,7 +2,7 @@
 
 ### Add
 
-- Support Forge 1.18.2+, Hope there is no structure changed in the future. (#8)
+- Support Forge 1.17.1+, Hope there is no structure changed in the future. (#8)
 
 ### Changed
 
@@ -10,7 +10,7 @@
 
 ### Credit
 
-- Thanks for 小羅's feedback on Forge 1.18.2+.
+- Thanks for 小羅's feedback on Forge 1.17.1+.
 
 <!-- Added for new features.
 Changed for changes in existing functionality.
