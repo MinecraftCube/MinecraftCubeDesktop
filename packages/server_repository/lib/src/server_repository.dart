@@ -17,7 +17,8 @@ class ServerRepository {
   Stream<String> startServer({
     CubeProperties cubeProperties = const CubeProperties(),
     String? javaExecutable,
-    required String executable,
+    required JarArchiveInfo jarArchiveInfo,
+    required String projectPath,
   }) async* {
     _clearProcess();
     final javaSource = javaExecutable ?? cubeProperties.java;
@@ -26,23 +27,28 @@ class ServerRepository {
       '-Xms${cubeProperties.xms}'
     ];
     const javaExecuteArg = '-jar';
-    final serverExecutable = p.basename(executable);
+    final serverExecutable = p.basename(jarArchiveInfo.executable);
+    final forgeTxtArguments =
+        '@' + p.relative(jarArchiveInfo.executable, from: projectPath);
     const serverArgument = 'nogui';
 
     // Don't use const, const means unmodifiable list.
     final List<String> commands = [];
     commands.add(javaSource);
     commands.addAll(javaArguments);
-    commands.add(javaExecuteArg);
-    commands.add(serverExecutable);
+    if (jarArchiveInfo.type == JarType.forge1182) {
+      commands.add(forgeTxtArguments);
+    } else {
+      commands.add(javaExecuteArg);
+      commands.add(serverExecutable);
+    }
     commands.add(serverArgument);
 
-    final serverExecutableDir = p.dirname(executable);
+    final serverExecutableDir = projectPath;
     final process = await _processManager.start(
       commands,
       runInShell: true,
-      workingDirectory:
-          serverExecutableDir.isNotEmpty ? serverExecutableDir : null,
+      workingDirectory: serverExecutableDir,
     );
     _process = process;
 
@@ -51,9 +57,14 @@ class ServerRepository {
     // dev trust exitCode more than stream, so the method looks wierd.
     final controller = StreamController<String>();
     final terminalStream = mergeStream(process.stdout, process.stderr);
-    final sub = terminalStream.listen((log) {
-      controller.sink.add(log);
-    });
+    final sub = terminalStream.listen(
+      (log) {
+        controller.sink.add(log);
+      },
+      onError: (e) {
+        controller.sink.add(e.toString());
+      }, // FormatException will cause an uncatachable exception...
+    );
 
     // Trust on exitCode to terminate stream
     process.exitCode.then((value) async {

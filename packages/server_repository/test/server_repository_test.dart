@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as io;
+import 'package:path/path.dart' as p;
 
 import 'package:cube_api/cube_api.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -37,6 +38,9 @@ void main() {
           () async {
         const serverExecutable = 'nothing';
         const cubeProperties = CubeProperties();
+        const jarArchiveInfo =
+            JarArchiveInfo(type: JarType.vanilla, executable: serverExecutable);
+        const projectPath = '/';
         when(
           () => processManager.start(
             captureAny(),
@@ -47,7 +51,8 @@ void main() {
 
         await expectLater(
           repository.startServer(
-            executable: serverExecutable,
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
             cubeProperties: cubeProperties,
           ),
           emitsError(isException),
@@ -70,7 +75,7 @@ void main() {
             'nogui',
           ],
           true,
-          '.',
+          '/',
         ]);
       });
 
@@ -78,6 +83,9 @@ void main() {
         const serverExecutable = 'nothing';
         const specifiedJava = 'specifiedJava';
         const cubeProperties = CubeProperties();
+        const jarArchiveInfo =
+            JarArchiveInfo(type: JarType.vanilla, executable: serverExecutable);
+        const projectPath = '/';
         when(
           () => processManager.start(
             captureAny(),
@@ -89,7 +97,8 @@ void main() {
         await expectLater(
           repository.startServer(
             javaExecutable: specifiedJava,
-            executable: serverExecutable,
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
             cubeProperties: cubeProperties,
           ),
           emitsError(isException),
@@ -112,7 +121,7 @@ void main() {
             'nogui',
           ],
           true,
-          '.',
+          '/',
         ]);
       });
 
@@ -120,6 +129,9 @@ void main() {
         test('throws Exception when use java17 on unsupported forge', () async {
           const serverExecutable = 'server.jar';
           const cubeProperties = CubeProperties();
+          const jarArchiveInfo =
+              JarArchiveInfo(type: JarType.forge, executable: serverExecutable);
+          const projectPath = '/';
           final process = MockProcess();
           when(
             () => processManager.start(
@@ -144,7 +156,8 @@ void main() {
 
           repository
               .startServer(
-            executable: serverExecutable,
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
             cubeProperties: cubeProperties,
           )
               .listen(
@@ -169,6 +182,11 @@ void main() {
         test('return Safe when use java8 on forge without EULA', () async {
           const serverExecutable = 'server.jar';
           const cubeProperties = CubeProperties();
+          const jarArchiveInfo = JarArchiveInfo(
+            type: JarType.vanilla,
+            executable: serverExecutable,
+          );
+          const projectPath = '/';
           final process = MockProcess();
           when(
             () => processManager.start(
@@ -193,7 +211,8 @@ void main() {
 
           repository
               .startServer(
-            executable: serverExecutable,
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
             cubeProperties: cubeProperties,
           )
               .listen(
@@ -221,6 +240,11 @@ void main() {
         test('Success when use java8 on forge without EULA', () async {
           const serverExecutable = 'server.jar';
           const cubeProperties = CubeProperties();
+          const jarArchiveInfo = JarArchiveInfo(
+            type: JarType.forge,
+            executable: serverExecutable,
+          );
+          const projectPath = '/';
           final process = MockProcess();
           when(
             () => processManager.start(
@@ -266,7 +290,8 @@ void main() {
 
           repository
               .startServer(
-            executable: serverExecutable,
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
             cubeProperties: cubeProperties,
           )
               .listen(
@@ -303,6 +328,11 @@ void main() {
         test('throws Exception when use java8', () async {
           const serverExecutable = 'server.jar';
           const cubeProperties = CubeProperties();
+          const jarArchiveInfo = JarArchiveInfo(
+            type: JarType.vanilla,
+            executable: serverExecutable,
+          );
+          const projectPath = '/';
           final process = MockProcess();
           when(
             () => processManager.start(
@@ -328,7 +358,8 @@ void main() {
 
           repository
               .startServer(
-            executable: serverExecutable,
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
             cubeProperties: cubeProperties,
           )
               .listen(
@@ -353,6 +384,11 @@ void main() {
         test('return Safe when use java17 on forge without EULA', () async {
           const serverExecutable = 'server.jar';
           const cubeProperties = CubeProperties();
+          const jarArchiveInfo = JarArchiveInfo(
+            type: JarType.vanilla,
+            executable: serverExecutable,
+          );
+          const projectPath = '/';
           final process = MockProcess();
           when(
             () => processManager.start(
@@ -378,7 +414,8 @@ void main() {
 
           repository
               .startServer(
-            executable: serverExecutable,
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
             cubeProperties: cubeProperties,
           )
               .listen(
@@ -406,6 +443,11 @@ void main() {
         test('Success when use java8 on forge without EULA', () async {
           const serverExecutable = 'server.jar';
           const cubeProperties = CubeProperties();
+          const jarArchiveInfo = JarArchiveInfo(
+            type: JarType.vanilla,
+            executable: serverExecutable,
+          );
+          const projectPath = '/';
           final process = MockProcess();
           when(
             () => processManager.start(
@@ -451,7 +493,8 @@ void main() {
 
           repository
               .startServer(
-            executable: serverExecutable,
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
             cubeProperties: cubeProperties,
           )
               .listen(
@@ -478,6 +521,244 @@ void main() {
               contains(VANILLA_ECHO),
               contains(VANILLA_SUCCESS_PART_B['content']),
               contains(VANILLA_SUCCESS_PART_A['content']),
+              endsWith('Safe Complete!'),
+            ]),
+          );
+        });
+      });
+
+      group('forge 1.18.2+', () {
+        test('throws Exception when use java8 on unsupported forge', () async {
+          final serverExecutable = p.join(
+            'server',
+            'specificProject',
+            'libraries',
+            'net',
+            'minecraftforge',
+            'forge',
+            '1.18.2-40.1.30',
+            'win_args.txt',
+          );
+          const cubeProperties = CubeProperties();
+          final jarArchiveInfo = JarArchiveInfo(
+            type: JarType.forge1182,
+            executable: serverExecutable,
+          );
+          final projectPath = p.join('server', 'specificProject');
+          final process = MockProcess();
+          when(
+            () => processManager.start(
+              captureAny(),
+              workingDirectory: captureAny(named: 'workingDirectory'),
+              runInShell: captureAny(named: 'runInShell'),
+            ),
+          ).thenAnswer((_) async => process);
+          when(() => process.stderr).thenAnswer(
+            (_) =>
+                convertStringToStream(FORGE_JAVA_FAILURE['content'] as String),
+          );
+          when(() => process.stdout).thenAnswer((_) => Stream.fromIterable([]));
+          when(() => process.exitCode).thenAnswer((_) async {
+            await Future.delayed(const Duration(seconds: 2));
+            return int.parse(FORGE_JAVA_FAILURE['code'] as String);
+          });
+
+          final Completer completer = Completer();
+          final List<String> collects = [];
+          bool isErrorCalled = false;
+
+          repository
+              .startServer(
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
+            cubeProperties: cubeProperties,
+          )
+              .listen(
+            (event) {
+              collects.add(event);
+            },
+            onError: (e) {
+              isErrorCalled = true;
+              expect(e, isA<ServerCloseUnexpectedException>());
+            },
+            onDone: () {
+              completer.complete();
+            },
+          );
+
+          await completer.future;
+
+          expect(isErrorCalled, isTrue);
+          expect(collects.join('\n'), equals(FORGE_JAVA_FAILURE['content']));
+          final captures = verify(
+            () => processManager.start(
+              captureAny(),
+              workingDirectory: captureAny(named: 'workingDirectory'),
+              runInShell: captureAny(named: 'runInShell'),
+            ),
+          ).captured;
+          expect(captures, [
+            [
+              cubeProperties.java,
+              '-Xmx${cubeProperties.xmx}',
+              '-Xms${cubeProperties.xms}',
+              '@' +
+                  p.join(
+                    'libraries',
+                    'net',
+                    'minecraftforge',
+                    'forge',
+                    '1.18.2-40.1.30',
+                    'win_args.txt',
+                  ),
+              'nogui',
+            ],
+            true,
+            projectPath,
+          ]);
+        });
+
+        test('return Safe when use java17 on forge without EULA', () async {
+          const serverExecutable =
+              'libraries/net/minecraftforge/forge/1.18.2-40.1.30/win_args.txt';
+          const cubeProperties = CubeProperties();
+          const jarArchiveInfo = JarArchiveInfo(
+            type: JarType.forge1182,
+            executable: serverExecutable,
+          );
+          const projectPath = '/';
+          final process = MockProcess();
+          when(
+            () => processManager.start(
+              captureAny(),
+              workingDirectory: captureAny(named: 'workingDirectory'),
+              runInShell: captureAny(named: 'runInShell'),
+            ),
+          ).thenAnswer((_) async => process);
+          when(() => process.stderr).thenAnswer(
+            (_) =>
+                convertStringToStream(FORGE_EULA_FAILURE['content'] as String),
+          );
+          when(() => process.stdout).thenAnswer((_) => Stream.fromIterable([]));
+          when(() => process.exitCode).thenAnswer((_) async {
+            await Future.delayed(const Duration(seconds: 2));
+            return int.parse(FORGE_EULA_FAILURE['code'] as String);
+          });
+
+          final Completer completer = Completer();
+          final List<String> collects = [];
+          bool isErrorCalled = false;
+
+          repository
+              .startServer(
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
+            cubeProperties: cubeProperties,
+          )
+              .listen(
+            (event) {
+              collects.add(event);
+            },
+            onError: (e) {
+              isErrorCalled = true;
+            },
+            onDone: () {
+              completer.complete();
+            },
+          );
+
+          await completer.future;
+
+          expect(isErrorCalled, isFalse);
+          final content = FORGE_EULA_FAILURE['content'] as String;
+          expect(
+            collects.join('\n'),
+            equals(content + '\nSafe Complete!'),
+          );
+        });
+
+        test('Success when use java17 on forge without EULA', () async {
+          const serverExecutable =
+              'libraries/net/minecraftforge/forge/1.18.2-40.1.30/win_args.txt';
+          const cubeProperties = CubeProperties();
+          const jarArchiveInfo = JarArchiveInfo(
+            type: JarType.forge1182,
+            executable: serverExecutable,
+          );
+          const projectPath = '/';
+          final process = MockProcess();
+          when(
+            () => processManager.start(
+              captureAny(),
+              workingDirectory: captureAny(named: 'workingDirectory'),
+              runInShell: captureAny(named: 'runInShell'),
+            ),
+          ).thenAnswer((_) async => process);
+          when(() => process.stderr).thenAnswer(
+            (_) => Stream.fromIterable([]),
+          );
+
+          final controller = StreamController<List<int>>();
+          when(() => process.stdout).thenAnswer((_) async* {
+            yield* convertStringToStream(
+              FORGE_SUCCESS_PART_A['content'] as String,
+            );
+            yield* controller.stream;
+            yield* convertStringToStream(
+              FORGE_SUCCESS_PART_B['content'] as String,
+            );
+          });
+
+          final mockStdin = MockIOSink();
+          when(() => process.stdin).thenReturn(mockStdin);
+          when(() => mockStdin.writeln(any(that: startsWith('stop'))))
+              .thenAnswer((_) {
+            controller.close();
+          });
+          when(() => mockStdin.writeln(any(that: isNot(startsWith('stop')))))
+              .thenAnswer((_) {
+            controller.sink.add(FORGE_ECHO.codeUnits);
+          });
+
+          when(() => process.exitCode).thenAnswer((_) async {
+            await Future.delayed(const Duration(seconds: 2));
+            return int.parse(FORGE_EULA_FAILURE['code'] as String);
+          });
+
+          final Completer completer = Completer();
+          final List<String> collects = [];
+          bool isErrorCalled = false;
+
+          repository
+              .startServer(
+            jarArchiveInfo: jarArchiveInfo,
+            projectPath: projectPath,
+            cubeProperties: cubeProperties,
+          )
+              .listen(
+            (event) {
+              collects.add(event);
+            },
+            onError: (e) {
+              isErrorCalled = true;
+            },
+            onDone: () {
+              completer.complete();
+            },
+          );
+
+          await Future.delayed(const Duration(seconds: 1));
+          repository.inputCommand(command: '123');
+          repository.inputCommand(command: 'stop');
+          await completer.future;
+
+          expect(isErrorCalled, isFalse);
+          expect(
+            collects.join('\n'),
+            allOf([
+              contains(FORGE_ECHO),
+              contains(FORGE_SUCCESS_PART_B['content']),
+              contains(FORGE_SUCCESS_PART_A['content']),
               endsWith('Safe Complete!'),
             ]),
           );
@@ -563,7 +844,8 @@ Starting net.minecraft.server.Main
 // ignore: constant_identifier_names
 const VANILLA_SUCCESS_PART_A = {
   'code': '0',
-  'content': r'''Starting net.minecraft.server.Main
+  'content':
+      r'''Starting net.minecraft.server.Main
 [00:15:20] [ServerMain/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
 [00:15:20] [ServerMain/WARN]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
 [00:15:20] [ServerMain/WARN]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
@@ -634,7 +916,8 @@ const VANILLA_ECHO =
 // ignore: constant_identifier_names
 const VANILLA_SUCCESS_PART_B = {
   'code': '0',
-  'content': r'''[00:16:34] [Server thread/INFO]: Stopping the server
+  'content':
+      r'''[00:16:34] [Server thread/INFO]: Stopping the server
 [00:16:34] [Server thread/INFO]: Stopping server
 [00:16:34] [Server thread/INFO]: Saving players
 [00:16:34] [Server thread/INFO]: Saving worlds

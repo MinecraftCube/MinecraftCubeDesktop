@@ -48,6 +48,8 @@ class MockConsoleRepository extends Mock implements ConsoleRepository {}
 
 class MockCubeProperties extends Mock implements CubeProperties {}
 
+class MockJarArchiveInfo extends Mock implements JarArchiveInfo {}
+
 class MockFakeState extends Mock implements IState {}
 
 void main() {
@@ -121,9 +123,10 @@ void main() {
     ).thenAnswer((_) => Stream.fromIterable(['elements']));
     when(
       () => serverRepository.startServer(
-        executable: any(named: 'executable'),
-        javaExecutable: any(named: 'javaExecutable'),
+        jarArchiveInfo: any(named: 'jarArchiveInfo'),
         cubeProperties: any(named: 'cubeProperties'),
+        javaExecutable: any(named: 'javaExecutable'),
+        projectPath: any(named: 'projectPath'),
       ),
     ).thenAnswer((_) => Stream.fromIterable([]));
     when(() => serverRepository.inputCommand(command: any(named: 'command')))
@@ -132,6 +135,7 @@ void main() {
   });
   setUpAll(() {
     registerFallbackValue(MockCubeProperties());
+    registerFallbackValue(MockJarArchiveInfo());
   });
   group('ServerMachine', () {
     group('consturcotr', () {

@@ -1,5 +1,7 @@
 @Tags(['integration'])
 
+import 'dart:io';
+
 import 'package:cube_api/cube_api.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
@@ -144,6 +146,61 @@ void main() {
           );
         },
       );
+
+      group('return forge1182 on forge dir (after 1.18.2)', () {
+        test(
+          '[windows]',
+          () async {
+            await copyPath(
+              p.join(TestUtilities().rootResources, 'jar_analyzer_repository'),
+              p.join(rootPath.path),
+            );
+            final targetPath = p.join(rootPath.path, 'forge_after_1182');
+            expect(
+              await repository.analyzeDirectory(directory: targetPath),
+              JarArchiveInfo(
+                type: JarType.forge1182,
+                executable: p.join(
+                  targetPath,
+                  'libraries',
+                  'net',
+                  'minecraftforge',
+                  'forge',
+                  '1.18.2-40.1.30',
+                  'win_args.txt',
+                ),
+              ),
+            );
+          },
+          skip: !Platform.isWindows,
+        );
+        test(
+          '[others]',
+          () async {
+            await copyPath(
+              p.join(TestUtilities().rootResources, 'jar_analyzer_repository'),
+              p.join(rootPath.path),
+            );
+            final targetPath = p.join(rootPath.path, 'forge_after_1182');
+            expect(
+              await repository.analyzeDirectory(directory: targetPath),
+              JarArchiveInfo(
+                type: JarType.forge1182,
+                executable: p.join(
+                  targetPath,
+                  'libraries',
+                  'net',
+                  'minecraftforge',
+                  'forge',
+                  '1.18.2-40.1.30',
+                  'unix_args.txt',
+                ),
+              ),
+            );
+          },
+          skip: Platform.isWindows,
+        );
+      });
     });
   });
 }

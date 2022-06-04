@@ -3,15 +3,20 @@ import 'dart:typed_data';
 import 'package:cube_api/cube_api.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
+import 'package:platform/platform.dart';
+import 'package:path/path.dart' as p;
 
 class JarAnalyzerRepository {
   JarAnalyzerRepository({
     FileSystem? fileSystem,
     Archiver? archiver,
+    Platform? platform,
   })  : _fileSystem = fileSystem ?? const LocalFileSystem(),
-        _archiver = archiver ?? Archiver();
+        _archiver = archiver ?? Archiver(),
+        _platform = platform ?? const LocalPlatform();
   final FileSystem _fileSystem;
   final Archiver _archiver;
+  final Platform _platform;
 
   /// Get [JarArchiveInfo] from a zip(jar) file.
   ///
@@ -25,6 +30,8 @@ class JarAnalyzerRepository {
     File? forge;
     File? forgeInstaller;
     File? dangerous;
+
+    // check jar...
     await for (FileSystemEntity entity in dir.list()) {
       if (entity is File && entity.basename.endsWith('.jar')) {
         final bytes = await entity.readAsBytes();
@@ -40,8 +47,17 @@ class JarAnalyzerRepository {
         }
       }
     }
+
+    // RULE: Forge after 1.18.2 makes BIG changes on structure, and no dependencies on jar.
+    final forgeAfter1182 = await _searchForgeAfter1182(dir);
+
     // Forge is the highest order to return.
-    if (forge != null) {
+    if (forgeAfter1182 != null) {
+      return JarArchiveInfo(
+        type: JarType.forge1182,
+        executable: forgeAfter1182.path,
+      );
+    } else if (forge != null) {
       return JarArchiveInfo(
         type: JarType.forge,
         executable: forge.path,
@@ -103,5 +119,29 @@ class JarAnalyzerRepository {
       return JarType.unknown;
     }
     return JarType.unknown;
+  }
+
+  Future<File?> _searchForgeAfter1182(Directory directory) async {
+    // After forge 1.18.2, we should check
+    // windows: libraries/net/minecraftforge/forge/1.18.2-40.1.30/win_args.txt
+    // others: libraries/net/minecraftforge/forge/1.18.2-40.1.30/unix_args.txt
+    final target = _platform.isWindows ? 'win_args.txt' : 'unix_args.txt';
+    final targetDir = directory.childDirectory(
+      p.joinAll(
+        ['libraries', 'net', 'minecraftforge', 'forge'],
+      ),
+    );
+    if (!await targetDir.exists()) return null;
+    await for (FileSystemEntity entity in targetDir.list(recursive: true)) {
+      if (entity is File) {
+        if (entity.basename == target) {
+          return entity;
+        }
+      } else {
+        continue;
+      }
+    }
+
+    return null;
   }
 }

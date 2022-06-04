@@ -25,11 +25,16 @@ class ServerRunState extends IState {
       final executable = machine.executable;
       final jarInfo = machine.jarInfo;
       final properties = machine.properties;
-      if (properties != null && jarInfo != null && executable != null) {
+      final projectPath = machine.projectPath;
+      if (properties != null &&
+          jarInfo != null &&
+          executable != null &&
+          projectPath != null) {
         await for (final log in serverRepository.startServer(
-          executable: jarInfo.executable,
+          jarArchiveInfo: jarInfo,
           cubeProperties: properties,
           javaExecutable: executable,
+          projectPath: projectPath,
         )) {
           if (log.toLowerCase().contains('for help')) {
             machine.stable = true;

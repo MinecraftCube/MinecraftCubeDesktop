@@ -13,6 +13,7 @@ dependencies:
   path: ^1.8.0
   file: ^6.1.2
   intl: ^0.17.0
+  platform: ^3.1.0
   test_utilities:
     path: ../test_utilities
   cube_api:

@@ -121,7 +121,11 @@ void main() {
 
               repository
                   .startServer(
-                executable: serverExecutable,
+                jarArchiveInfo: const JarArchiveInfo(
+                  type: JarType.forge,
+                  executable: serverExecutable,
+                ),
+                projectPath: rootPath.path,
                 cubeProperties: cubeProperties,
               )
                   .listen(
@@ -175,7 +179,11 @@ void main() {
 
               repository
                   .startServer(
-                executable: serverExecutable,
+                jarArchiveInfo: const JarArchiveInfo(
+                  type: JarType.forge,
+                  executable: serverExecutable,
+                ),
+                projectPath: rootPath.path,
                 cubeProperties: cubeProperties,
               )
                   .listen(
@@ -226,7 +234,11 @@ void main() {
 
             repository
                 .startServer(
-              executable: serverExecutable,
+              jarArchiveInfo: const JarArchiveInfo(
+                type: JarType.forge,
+                executable: serverExecutable,
+              ),
+              projectPath: rootPath.path,
               cubeProperties: cubeProperties,
             )
                 .listen(
@@ -280,7 +292,11 @@ void main() {
 
             repository
                 .startServer(
-              executable: serverExecutable,
+              jarArchiveInfo: const JarArchiveInfo(
+                type: JarType.vanilla,
+                executable: serverExecutable,
+              ),
+              projectPath: rootPath.path,
               cubeProperties: cubeProperties,
             )
                 .listen(
@@ -334,7 +350,11 @@ void main() {
 
             repository
                 .startServer(
-              executable: serverExecutable,
+              jarArchiveInfo: const JarArchiveInfo(
+                type: JarType.vanilla,
+                executable: serverExecutable,
+              ),
+              projectPath: rootPath.path,
               cubeProperties: cubeProperties,
             )
                 .listen(
@@ -387,7 +407,11 @@ void main() {
 
             repository
                 .startServer(
-              executable: serverExecutable,
+              jarArchiveInfo: const JarArchiveInfo(
+                type: JarType.vanilla,
+                executable: serverExecutable,
+              ),
+              projectPath: rootPath.path,
               cubeProperties: cubeProperties,
             )
                 .listen(
@@ -422,6 +446,187 @@ void main() {
           timeout: const Timeout(Duration(seconds: 180)),
         );
       });
+
+      group(
+        'forge 1.18.2+',
+        () {
+          final serverExecutable = p.join(
+            'libraries',
+            'net',
+            'minecraftforge',
+            'forge',
+            '1.18.2-40.1.30',
+            (io.Platform.isWindows ? 'win_args.txt' : 'unix_args.txt'),
+          );
+          test(
+            'throws Exception when use java8 on unsupported forge',
+            () async {
+              await copyPath(
+                p.join(
+                  TestUtilities().rootResources,
+                  p.join('server_repository', 'forge', '1.18.2'),
+                ),
+                p.join(rootPath.path),
+              );
+              final cubeProperties = CubeProperties(java: java8);
+              final Completer completer = Completer();
+              final List<String> collects = [];
+              bool isErrorCalled = false;
+
+              repository
+                  .startServer(
+                jarArchiveInfo: JarArchiveInfo(
+                  type: JarType.forge1182,
+                  executable: serverExecutable,
+                ),
+                projectPath: rootPath.path,
+                cubeProperties: cubeProperties,
+              )
+                  .listen(
+                (event) {
+                  collects.add(event);
+                },
+                onError: (e) {
+                  isErrorCalled = true;
+                  expect(e, isA<ServerCloseUnexpectedException>());
+                },
+                onDone: () {
+                  completer.complete();
+                },
+              );
+
+              await completer.future;
+
+              expect(isErrorCalled, isTrue);
+              expect(
+                collects.join('\n'),
+                // contains(RegExp(r'@.*_args.txt')),
+                contains('FormatException'),
+              );
+
+              // Not sure why need a 5 secs delay on this case
+              await Future.delayed(const Duration(seconds: 5));
+            },
+            skip: !isJava8,
+          );
+
+          test(
+            'return Safe when use java17 on forge without EULA',
+            () async {
+              await copyPath(
+                p.join(
+                  TestUtilities().rootResources,
+                  p.join('server_repository', 'forge', '1.18.2'),
+                ),
+                p.join(rootPath.path),
+              );
+              await copyPath(
+                p.join(
+                  TestUtilities().rootResources,
+                  p.join('server_repository', 'files', 'false_eula'),
+                ),
+                p.join(rootPath.path),
+              );
+              final cubeProperties = CubeProperties(java: java17);
+              final Completer completer = Completer();
+              final List<String> collects = [];
+              bool isErrorCalled = false;
+
+              repository
+                  .startServer(
+                jarArchiveInfo: JarArchiveInfo(
+                  type: JarType.forge1182,
+                  executable: serverExecutable,
+                ),
+                projectPath: rootPath.path,
+                cubeProperties: cubeProperties,
+              )
+                  .listen(
+                (event) {
+                  collects.add(event);
+                },
+                onError: (e) {
+                  isErrorCalled = true;
+                },
+                onDone: () {
+                  completer.complete();
+                },
+              );
+
+              await completer.future;
+
+              expect(isErrorCalled, isFalse);
+              expect(
+                collects.join('\n'),
+                allOf([
+                  contains(FORGE_EULA_FAILURE),
+                  contains('\nSafe Complete!'),
+                ]),
+              );
+            },
+            skip: !isJava17,
+          );
+
+          test('Success when use java17 on forge', () async {
+            await copyPath(
+              p.join(
+                TestUtilities().rootResources,
+                p.join('server_repository', 'forge', '1.18.2'),
+              ),
+              p.join(rootPath.path),
+            );
+            await copyPath(
+              p.join(
+                TestUtilities().rootResources,
+                p.join('server_repository', 'files', 'true_eula'),
+              ),
+              p.join(rootPath.path),
+            );
+            final cubeProperties = CubeProperties(java: java17);
+            final Completer completer = Completer();
+            final List<String> collects = [];
+            bool isErrorCalled = false;
+
+            repository
+                .startServer(
+              jarArchiveInfo: JarArchiveInfo(
+                type: JarType.forge1182,
+                executable: serverExecutable,
+              ),
+              projectPath: rootPath.path,
+              cubeProperties: cubeProperties,
+            )
+                .listen(
+              (event) {
+                collects.add(event);
+              },
+              onError: (e) {
+                isErrorCalled = true;
+              },
+              onDone: () {
+                completer.complete();
+              },
+            );
+
+            await Future.delayed(const Duration(seconds: 1));
+            repository.inputCommand(command: '123');
+            repository.inputCommand(command: 'stop');
+            await completer.future;
+
+            expect(isErrorCalled, isFalse);
+            expect(
+              collects.join('\n'),
+              allOf([
+                contains('Unknown or incomplete command, see below for error'),
+                contains(FORGE_SUCCESS_PART_B),
+                contains('For help, type "help"'),
+                endsWith('Safe Complete!'),
+              ]),
+            );
+          });
+        },
+        skip: !isJava17,
+      );
     });
   });
 }

@@ -101,6 +101,23 @@ void main() {
         verify(() => machine.state.start()).called(1);
       });
       test(
+          'transition to PostProcessCleanerState when machine.projectPath is null',
+          () async {
+        when(() => machine.executable).thenReturn('java');
+        when(() => machine.jarInfo).thenReturn(
+          const JarArchiveInfo(
+            type: JarType.vanilla,
+            executable: 'server.jar',
+          ),
+        );
+        when(() => machine.properties).thenReturn(const CubeProperties());
+        when(() => machine.projectPath).thenReturn(null);
+        await expectLater(state.start(), completes);
+        verify(() => machine.addLog(any())).called(2);
+        verify(() => machine.state = postProcessCleanerState);
+        verify(() => machine.state.start()).called(1);
+      });
+      test(
           'transition to PostProcessCleanerState when repository throws exception',
           () async {
         when(() => machine.executable).thenReturn('java');
@@ -111,11 +128,13 @@ void main() {
           ),
         );
         when(() => machine.properties).thenReturn(const CubeProperties());
+        when(() => machine.projectPath).thenReturn('123');
         when(
           () => repository.startServer(
-            executable: any(named: 'executable'),
+            jarArchiveInfo: any(named: 'jarArchiveInfo'),
             cubeProperties: any(named: 'cubeProperties'),
             javaExecutable: any(named: 'javaExecutable'),
+            projectPath: any(named: 'projectPath'),
           ),
         ).thenThrow(Exception());
         await expectLater(state.start(), completes);
@@ -132,11 +151,13 @@ void main() {
           ),
         );
         when(() => machine.properties).thenReturn(const CubeProperties());
+        when(() => machine.projectPath).thenReturn('123');
         when(
           () => repository.startServer(
-            executable: any(named: 'executable'),
+            jarArchiveInfo: any(named: 'jarArchiveInfo'),
             cubeProperties: any(named: 'cubeProperties'),
             javaExecutable: any(named: 'javaExecutable'),
+            projectPath: any(named: 'projectPath'),
           ),
         ).thenAnswer((_) => Stream.fromIterable(['ABC']));
         await expectLater(state.start(), completes);
@@ -154,12 +175,13 @@ void main() {
           ),
         );
         when(() => machine.properties).thenReturn(const CubeProperties());
-
+        when(() => machine.projectPath).thenReturn('123');
         when(
           () => repository.startServer(
-            executable: any(named: 'executable'),
+            jarArchiveInfo: any(named: 'jarArchiveInfo'),
             cubeProperties: any(named: 'cubeProperties'),
             javaExecutable: any(named: 'javaExecutable'),
+            projectPath: any(named: 'projectPath'),
           ),
         ).thenAnswer((_) => Stream.fromIterable(['ABC', 'For help']));
         await expectLater(state.start(), completes);
