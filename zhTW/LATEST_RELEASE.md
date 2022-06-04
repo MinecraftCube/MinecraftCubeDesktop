@@ -8,6 +8,10 @@
 
 - 框架版本提升至 3.0.1 (#6)
 
+### 感謝
+
+- 感謝 小羅 於 Forge 1.18.2 的回報。
+
 <!--
 新增 for new features.
 改動 for changes in existing functionality.

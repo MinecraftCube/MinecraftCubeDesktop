@@ -8,6 +8,10 @@
 
 - 框架版本提升至 3.0.1 (#6)
 
+### 感謝
+
+- 感謝 小羅 於 Forge 1.18.2 的回報。
+
 **載點:**
 [Windows](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.2.0/windows-release-v1.2.0.zip),
 [Linux](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.2.0/linux-release-v1.2.0.zip),

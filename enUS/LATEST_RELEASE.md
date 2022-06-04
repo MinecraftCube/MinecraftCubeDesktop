@@ -8,6 +8,10 @@
 
 - Upgrade flutter framework to 3.0.1
 
+### Credit
+
+- Thanks for 小羅's feedback on Forge 1.18.2+.
+
 <!-- Added for new features.
 Changed for changes in existing functionality.
 Deprecated for soon-to-be removed features.

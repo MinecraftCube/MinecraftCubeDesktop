@@ -8,6 +8,10 @@
 
 - Upgrade flutter framework to 3.0.1
 
+### Credit
+
+- Thanks for 小羅's feedback on Forge 1.18.2+.
+
 **Download:**
 [Windows](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.2.0/windows-release-v1.2.0.zip),
 [Linux](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.2.0/linux-release-v1.2.0.zip),
