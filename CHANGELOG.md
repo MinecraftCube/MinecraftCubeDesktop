@@ -6,7 +6,7 @@
 
 ### Added
 
-- Add support for forge 1.18.2. (#8)
+- Add support for forge 1.17.1+. (#8)
 
 ### Changed
 
