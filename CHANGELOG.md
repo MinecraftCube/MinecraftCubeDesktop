@@ -6,7 +6,11 @@
 
 ### Added
 
-- Add support for forge 1.18.2.
+- Add support for forge 1.18.2. (#8)
+
+### Changed
+
+- Upgrade to flutter 3.0.1 (#6)
 
 ## [1.1.0] - 2022-05-05
 

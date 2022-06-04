@@ -495,7 +495,7 @@ class _ConsoleLinesDisplayerState extends State<ConsoleLinesDisplayer> {
 
   @override
   void didUpdateWidget(covariant ConsoleLinesDisplayer oldWidget) {
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller.jumpTo(_controller.position.maxScrollExtent);
     });
     super.didUpdateWidget(oldWidget);

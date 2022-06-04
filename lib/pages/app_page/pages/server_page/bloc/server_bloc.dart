@@ -98,6 +98,7 @@ class _MachineIdleChanged extends ServerEvent {
 }
 
 enum ServerType { none, eula, dangerous }
+
 enum ServerProgress { idle, run }
 
 class ServerState extends Equatable {
