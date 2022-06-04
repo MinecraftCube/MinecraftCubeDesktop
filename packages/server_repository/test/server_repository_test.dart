@@ -844,8 +844,7 @@ Starting net.minecraft.server.Main
 // ignore: constant_identifier_names
 const VANILLA_SUCCESS_PART_A = {
   'code': '0',
-  'content':
-      r'''Starting net.minecraft.server.Main
+  'content': r'''Starting net.minecraft.server.Main
 [00:15:20] [ServerMain/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
 [00:15:20] [ServerMain/WARN]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
 [00:15:20] [ServerMain/WARN]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
@@ -916,8 +915,7 @@ const VANILLA_ECHO =
 // ignore: constant_identifier_names
 const VANILLA_SUCCESS_PART_B = {
   'code': '0',
-  'content':
-      r'''[00:16:34] [Server thread/INFO]: Stopping the server
+  'content': r'''[00:16:34] [Server thread/INFO]: Stopping the server
 [00:16:34] [Server thread/INFO]: Stopping server
 [00:16:34] [Server thread/INFO]: Saving players
 [00:16:34] [Server thread/INFO]: Saving worlds
