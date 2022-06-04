@@ -1,12 +1,12 @@
-## MinecraftCube 1.1.0 - 2022/05/05
+## MinecraftCube 1.2.0 - 2022/06/04
 
 ### Add
 
-- Ignoring jar-dangerous asking by allowing once.
+- Support Forge 1.18.2+, Hope there is no structure changed in the future. (#8)
 
-### Fix
+### Changed
 
-- Title language is now synced with language changed.
+- Upgrade flutter framework to 3.0.1
 
 <!-- Added for new features.
 Changed for changes in existing functionality.

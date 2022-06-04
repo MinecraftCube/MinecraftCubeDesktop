@@ -1,3 +1,18 @@
+## MinecraftCube 1.2.0 - 2022/06/04
+
+### Add
+
+- Support Forge 1.18.2+, Hope there is no structure changed in the future. (#8)
+
+### Changed
+
+- Upgrade flutter framework to 3.0.1
+
+**Download:**
+[Windows](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.2.0/windows-release-v1.2.0.zip),
+[Linux](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.2.0/linux-release-v1.2.0.zip),
+[MacOS](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.2.0/macos-release-v1.2.0.zip)
+
 ## MinecraftCube 1.1.0 - 2022/05/05
 
 ### Add

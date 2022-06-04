@@ -1,3 +1,18 @@
+## 創世神魔方 1.2.0 - 2022/06/04
+
+### 新增
+
+- 支援 Forge 1.18.2 的新結構，現在可以使用魔方開啟 1.18.2+ 的版本 (未來若又結構更動會有技術債 QQ) (#8)
+
+### 改動
+
+- 框架版本提升至 3.0.1 (#6)
+
+**載點:**
+[Windows](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.2.0/windows-release-v1.2.0.zip),
+[Linux](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.2.0/linux-release-v1.2.0.zip),
+[MacOS](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.2.0/macos-release-v1.2.0.zip)
+
 ## 創世神魔方 1.1.0 - 2022/05/05
 
 ### 新增
