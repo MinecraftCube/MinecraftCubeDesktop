@@ -1,3 +1,4 @@
+import 'package:cube_api/cube_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,14 +43,14 @@ class ServerCreationDialogView extends StatefulWidget {
 }
 
 enum ServerCreationType {
-  official,
+  vanilla,
   custom,
 }
 
 extension ServerCreationTypeExtension on ServerCreationType {
   get name {
     switch (this) {
-      case ServerCreationType.official:
+      case ServerCreationType.vanilla:
         return serverPageCreationDialogTypeOfficial.i18n;
       case ServerCreationType.custom:
         return serverPageCreationDialogTypeCustom.i18n;
@@ -65,8 +66,11 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
   @override
   void initState() {
     context.read<InstallerManagerCubit>().getInstallers();
-    _createTypeTabController =
-        TabController(length: ServerCreationType.values.length, vsync: this);
+    _createTypeTabController = TabController(
+      length: ServerCreationType.values.length,
+      vsync: this,
+      initialIndex: ServerCreationType.vanilla.index,
+    );
     _controller = TextEditingController();
     _controller.addListener(() {
       setState(() {});
@@ -119,28 +123,27 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
             child: Container(
               width: 320,
               constraints: const BoxConstraints(maxHeight: 320),
-              child: BlocBuilder<InstallerManagerCubit, InstallerManagerState>(
-                builder: (context, state) {
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final installer = state.installers[index];
-                      return RadioListTile<InstallerFile>(
-                        value: installer,
-                        title: Text(p.basename(installer.path)),
-                        subtitle: Text(installer.installer.name),
-                        groupValue: _selectedInstaller,
-                        onChanged: (InstallerFile? file) => setState(() {
-                          _selectedInstaller = file;
-                        }),
-                      );
+              child: TabBarView(
+                controller: _createTypeTabController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  VanillaTabView(
+                    installerFile: _selectedInstaller,
+                    onChanged: (file) {
+                      setState(() {
+                        _selectedInstaller = file;
+                      });
                     },
-                    separatorBuilder: (context, index) {
-                      return const Divider();
+                  ),
+                  CustomTabView(
+                    installerFile: _selectedInstaller,
+                    onChanged: (file) {
+                      setState(() {
+                        _selectedInstaller = file;
+                      });
                     },
-                    itemCount: state.installers.length,
-                  );
-                },
+                  ),
+                ],
               ),
             ),
           ),
@@ -180,6 +183,85 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
           child: Text(serverPageCreationDialogCreate.i18n),
         ),
       ],
+    );
+  }
+}
+
+class VanillaTabView extends StatelessWidget {
+  const VanillaTabView({
+    Key? key,
+    this.installerFile,
+    required this.onChanged,
+  }) : super(key: key);
+  final InstallerFile? installerFile;
+  final void Function(InstallerFile file) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final fakeInstallers = List<InstallerFile>.generate(5, (index) {
+      return InstallerFile(
+        installer: Installer(
+            'name$index', 'description', JarType.vanilla, 'serverPath'),
+        path: 'path$index',
+      );
+    });
+    return ListView.separated(
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        final installer = fakeInstallers[index];
+        return RadioListTile<InstallerFile>(
+          value: installer,
+          title: Text(p.basename(installer.path)),
+          subtitle: Text(installer.installer.name),
+          groupValue: installerFile,
+          onChanged: (InstallerFile? file) {
+            if (file == null) return;
+            onChanged(file);
+          },
+        );
+      },
+      separatorBuilder: (context, index) {
+        return const Divider();
+      },
+      itemCount: fakeInstallers.length,
+    );
+  }
+}
+
+class CustomTabView extends StatelessWidget {
+  const CustomTabView({
+    Key? key,
+    this.installerFile,
+    required this.onChanged,
+  }) : super(key: key);
+  final InstallerFile? installerFile;
+  final void Function(InstallerFile file) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<InstallerManagerCubit, InstallerManagerState>(
+      builder: (context, state) {
+        return ListView.separated(
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final installer = state.installers[index];
+            return RadioListTile<InstallerFile>(
+              value: installer,
+              title: Text(p.basename(installer.path)),
+              subtitle: Text(installer.installer.name),
+              groupValue: installerFile,
+              onChanged: (InstallerFile? file) {
+                if (file == null) return;
+                onChanged(file);
+              },
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const Divider();
+          },
+          itemCount: state.installers.length,
+        );
+      },
     );
   }
 }
