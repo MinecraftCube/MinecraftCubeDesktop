@@ -6,6 +6,9 @@ const serverPageCreationDialogSelectInstaller =
 const serverPageCreationDialogServerName = 'serverPageCreationDialogServerName';
 const serverPageCreationDialogBack = 'serverPageCreationDialogBack';
 const serverPageCreationDialogCreate = 'serverPageCreationDialogCreate';
+const serverPageCreationDialogTypeOfficial =
+    'serverPageCreationDialogTypeOfficial';
+const serverPageCreationDialogTypeCustom = 'serverPageCreationDialogTypeCustom';
 
 extension Localization on String {
   static final _t = Translations.from(
@@ -27,6 +30,14 @@ extension Localization on String {
         AppLocalization.enUS.name: 'Create',
         AppLocalization.zhTW.name: '建立',
       },
+      serverPageCreationDialogTypeOfficial: {
+        AppLocalization.enUS.name: 'Vanilla',
+        AppLocalization.zhTW.name: '原味',
+      },
+      serverPageCreationDialogTypeCustom: {
+        AppLocalization.enUS.name: 'Installer',
+        AppLocalization.zhTW.name: '安裝包',
+      }
     },
   );
 

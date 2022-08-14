@@ -50,9 +50,9 @@ extension ServerCreationTypeExtension on ServerCreationType {
   get name {
     switch (this) {
       case ServerCreationType.official:
-        return '官方';
+        return serverPageCreationDialogTypeOfficial.i18n;
       case ServerCreationType.custom:
-        return '安裝包';
+        return serverPageCreationDialogTypeCustom.i18n;
     }
   }
 }
