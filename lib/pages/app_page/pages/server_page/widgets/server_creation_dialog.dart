@@ -41,12 +41,32 @@ class ServerCreationDialogView extends StatefulWidget {
       _ServerCreationDialogViewState();
 }
 
-class _ServerCreationDialogViewState extends State<ServerCreationDialogView> {
+enum ServerCreationType {
+  official,
+  custom,
+}
+
+extension ServerCreationTypeExtension on ServerCreationType {
+  get name {
+    switch (this) {
+      case ServerCreationType.official:
+        return '官方';
+      case ServerCreationType.custom:
+        return '安裝包';
+    }
+  }
+}
+
+class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
+    with TickerProviderStateMixin {
+  late TabController _createTypeTabController;
   late TextEditingController _controller;
   InstallerFile? _selectedInstaller;
   @override
   void initState() {
     context.read<InstallerManagerCubit>().getInstallers();
+    _createTypeTabController =
+        TabController(length: ServerCreationType.values.length, vsync: this);
     _controller = TextEditingController();
     _controller.addListener(() {
       setState(() {});
@@ -56,12 +76,14 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView> {
 
   @override
   void dispose() {
+    _createTypeTabController.dispose();
     _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorTheme = Theme.of(context).colorScheme;
     final isCreatable =
         _controller.text.isNotEmpty && _selectedInstaller != null;
     return AlertDialog(
@@ -74,6 +96,21 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView> {
           Container(
             height: 3,
             color: Colors.black,
+          ),
+          TabBar(
+            controller: _createTypeTabController,
+            indicator: BoxDecoration(
+              color: colorTheme.primary.withAlpha(200),
+            ),
+            labelColor: colorTheme.onSecondary,
+            unselectedLabelColor: colorTheme.primary.withAlpha(200),
+            tabs: ServerCreationType.values
+                .map(
+                  (type) => Tab(
+                    text: type.name,
+                  ),
+                )
+                .toList(),
           ),
           // Expanded(
           //   child: Container(),
