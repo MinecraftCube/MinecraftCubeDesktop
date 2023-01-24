@@ -45,7 +45,7 @@ dependencies:
   validators: ^3.0.0
 
   # widgets
-  dropdown_button2: ^1.1.1
+  dropdown_button2: ^1.9.2
   flutter_typeahead: ^4.0.0
   # overlay_builder: ^1.1.0
   # flutter_portal: ^0.4.0
