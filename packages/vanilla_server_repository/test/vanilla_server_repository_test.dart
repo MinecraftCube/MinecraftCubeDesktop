@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:system_repository/vanilla_server_repository.dart';
+import 'package:vanilla_server_repository/vanilla_server_repository.dart';
 
 import 'vanilla_manifest_info_test.dart' show givenVanillaManifestInfo;
 import 'vanilla_server_info_test.dart' show givenVanillaServerInfo;

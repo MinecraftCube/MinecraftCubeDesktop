@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:system_repository/src/vanilla_manifest/vanilla_manifest_info.dart';
-import 'package:system_repository/src/vanilla_manifest/vanilla_manifest_version_info.dart';
+import 'package:vanilla_server_repository/vanilla_server_repository.dart';
 
 void main() {
   group('VanillaManifestInfo', () {

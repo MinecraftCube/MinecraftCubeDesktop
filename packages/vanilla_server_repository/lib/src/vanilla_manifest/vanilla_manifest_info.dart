@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:system_repository/src/vanilla_manifest/vanilla_manifest_version_info.dart';
+import 'package:vanilla_server_repository/vanilla_server_repository.dart';
 
 part 'vanilla_manifest_info.g.dart';
 

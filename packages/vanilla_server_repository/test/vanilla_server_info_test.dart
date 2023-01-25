@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:system_repository/src/vanilla_server/vanilla_server_downloads_info.dart';
-import 'package:system_repository/src/vanilla_server/vanilla_server_downloads_server_info.dart';
-import 'package:system_repository/src/vanilla_server/vanilla_server_info.dart';
+import 'package:vanilla_server_repository/vanilla_server_repository.dart';
 
 void main() {
   group('VanillaServerInfo', () {

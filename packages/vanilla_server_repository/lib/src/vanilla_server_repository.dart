@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:system_repository/vanilla_server_repository.dart';
+import 'package:vanilla_server_repository/vanilla_server_repository.dart';
 
 class VanillaServerRepository {
   VanillaServerRepository({
