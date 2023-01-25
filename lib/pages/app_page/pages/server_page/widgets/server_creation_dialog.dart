@@ -201,7 +201,11 @@ class VanillaTabView extends StatelessWidget {
     final fakeInstallers = List<InstallerFile>.generate(5, (index) {
       return InstallerFile(
         installer: Installer(
-            'name$index', 'description', JarType.vanilla, 'serverPath'),
+          'name$index',
+          'description',
+          JarType.vanilla,
+          'serverPath',
+        ),
         path: 'path$index',
       );
     });
