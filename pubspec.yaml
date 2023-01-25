@@ -118,6 +118,8 @@ dependencies:
     path: ./packages/server_repository
   system_repository:
     path: ./packages/system_repository
+  vanilla_server_repository:
+    path: ./packages/vanilla_server_repository
 
 dev_dependencies:
   flutter_test:

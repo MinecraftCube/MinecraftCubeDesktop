@@ -1,5 +1,5 @@
-name: system_repository
-description: A Dart Repository which the process cleanup domain.
+name: vanilla_server_repository
+description: A Dart Repository which fetching data from vanilla.
 
 publish_to: none
 
