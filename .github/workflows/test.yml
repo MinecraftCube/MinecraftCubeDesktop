@@ -28,6 +28,9 @@ on:
   pull_request:
     types:
       - opened
+      - reopened
+      - ready_for_review
+      - synchronize
     branches:
       - 'main'
     paths:
@@ -46,7 +49,7 @@ on:
       - 'pubspec.yaml'
 
 concurrency: 
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: https://stackoverflow.com/questions/66335225/how-to-cancel-previous-runs-in-the-pr-when-you-push-new-commitsupdate-the-curre
   cancel-in-progress: true
 
 jobs:
