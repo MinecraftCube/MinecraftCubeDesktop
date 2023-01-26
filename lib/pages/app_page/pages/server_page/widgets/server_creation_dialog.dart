@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:installer_creator_repository/installer_creator_repository.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/widgets/server_creation_dialog.i18n.dart';
 import 'package:path/path.dart' as p;
 import 'package:server_management_repository/server_management_repository.dart';
@@ -29,6 +30,7 @@ class ServerCreationDialog extends StatelessWidget {
       create: (context) => InstallerManagerCubit(
         serverManagementRepository: context.read<ServerManagementRepository>(),
         vanillaServerRepository: context.read<VanillaServerRepository>(),
+        installerCreatorRepository: context.read<InstallerCreatorRepository>(),
       ),
       child: const ServerCreationDialogView(),
     );
@@ -64,7 +66,7 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
   late TabController _createTypeTabController;
   late TextEditingController _controller;
   InstallerFile? _selectedInstaller;
-  VanillaManifestVersionInfo? _versionInfo;
+  VanillaManifestVersionInfo? _selectedVersionInfo;
   @override
   void initState() {
     context.read<InstallerManagerCubit>().getInstallers();
@@ -90,8 +92,8 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
   @override
   Widget build(BuildContext context) {
     final colorTheme = Theme.of(context).colorScheme;
-    final isCreatable =
-        _controller.text.isNotEmpty && _selectedInstaller != null;
+    final isCreatable = _controller.text.isNotEmpty &&
+        (_selectedInstaller != null || _selectedVersionInfo != null);
     return AlertDialog(
       buttonPadding: const EdgeInsets.all(4),
       contentPadding: EdgeInsets.zero,
@@ -130,10 +132,11 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   VanillaTabView(
-                    versionInfo: _versionInfo,
+                    versionInfo: _selectedVersionInfo,
                     onChanged: (versionInfo) {
                       setState(() {
-                        _versionInfo = versionInfo;
+                        _selectedVersionInfo = versionInfo;
+                        _selectedInstaller = null;
                       });
                     },
                   ),
@@ -142,6 +145,7 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
                     onChanged: (file) {
                       setState(() {
                         _selectedInstaller = file;
+                        _selectedVersionInfo = null;
                       });
                     },
                   ),
@@ -170,9 +174,22 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
         ),
         TextButton(
           onPressed: isCreatable
-              ? () {
+              ? () async {
                   final installerFile = _selectedInstaller;
-                  if (installerFile != null && _controller.text.isNotEmpty) {
+                  final vanillaManifest = _selectedVersionInfo;
+                  final hasProjectName = _controller.text.isNotEmpty;
+                  if (installerFile != null && hasProjectName) {
+                    Navigator.of(context).pop(
+                      ServerCreationDialogResult(
+                        installerFile: installerFile,
+                        serverName: _controller.text,
+                      ),
+                    );
+                  } else if (vanillaManifest != null && hasProjectName) {
+                    final installerFile = await context
+                        .read<InstallerManagerCubit>()
+                        .getVanillaInstaller(vanillaManifest: vanillaManifest);
+                    if (!mounted || installerFile == null) return;
                     Navigator.of(context).pop(
                       ServerCreationDialogResult(
                         installerFile: installerFile,
