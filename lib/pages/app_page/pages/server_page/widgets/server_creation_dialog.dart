@@ -1,4 +1,3 @@
-import 'package:cube_api/cube_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +6,7 @@ import 'package:path/path.dart' as p;
 import 'package:server_management_repository/server_management_repository.dart';
 
 import 'package:minecraft_cube_desktop/pages/app_page/pages/server_page/bloc/installer_manager_cubit.dart';
+import 'package:vanilla_server_repository/vanilla_server_repository.dart';
 
 class ServerCreationDialogResult extends Equatable {
   final InstallerFile installerFile;
@@ -28,6 +28,7 @@ class ServerCreationDialog extends StatelessWidget {
     return BlocProvider(
       create: (context) => InstallerManagerCubit(
         serverManagementRepository: context.read<ServerManagementRepository>(),
+        vanillaServerRepository: context.read<VanillaServerRepository>(),
       ),
       child: const ServerCreationDialogView(),
     );
@@ -63,6 +64,7 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
   late TabController _createTypeTabController;
   late TextEditingController _controller;
   InstallerFile? _selectedInstaller;
+  VanillaManifestVersionInfo? _versionInfo;
   @override
   void initState() {
     context.read<InstallerManagerCubit>().getInstallers();
@@ -128,10 +130,10 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   VanillaTabView(
-                    installerFile: _selectedInstaller,
-                    onChanged: (file) {
+                    versionInfo: _versionInfo,
+                    onChanged: (versionInfo) {
                       setState(() {
-                        _selectedInstaller = file;
+                        _versionInfo = versionInfo;
                       });
                     },
                   ),
@@ -190,44 +192,37 @@ class _ServerCreationDialogViewState extends State<ServerCreationDialogView>
 class VanillaTabView extends StatelessWidget {
   const VanillaTabView({
     Key? key,
-    this.installerFile,
+    this.versionInfo,
     required this.onChanged,
   }) : super(key: key);
-  final InstallerFile? installerFile;
-  final void Function(InstallerFile file) onChanged;
+  final VanillaManifestVersionInfo? versionInfo;
+  final void Function(VanillaManifestVersionInfo versionInfo) onChanged;
 
   @override
   Widget build(BuildContext context) {
-    final fakeInstallers = List<InstallerFile>.generate(5, (index) {
-      return InstallerFile(
-        installer: Installer(
-          'name$index',
-          'description',
-          JarType.vanilla,
-          'serverPath',
-        ),
-        path: 'path$index',
-      );
-    });
-    return ListView.separated(
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        final installer = fakeInstallers[index];
-        return RadioListTile<InstallerFile>(
-          value: installer,
-          title: Text(p.basename(installer.path)),
-          subtitle: Text(installer.installer.name),
-          groupValue: installerFile,
-          onChanged: (InstallerFile? file) {
-            if (file == null) return;
-            onChanged(file);
+    return BlocBuilder<InstallerManagerCubit, InstallerManagerState>(
+      builder: (context, state) {
+        return ListView.separated(
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final vanillaVersion = state.vanillaVersions[index];
+            return RadioListTile<VanillaManifestVersionInfo>(
+              value: vanillaVersion,
+              title: Text(vanillaVersion.id),
+              subtitle: Text(vanillaVersion.type),
+              groupValue: versionInfo,
+              onChanged: (VanillaManifestVersionInfo? vanillaVersion) {
+                if (vanillaVersion == null) return;
+                onChanged(vanillaVersion);
+              },
+            );
           },
+          separatorBuilder: (context, index) {
+            return const Divider();
+          },
+          itemCount: state.vanillaVersions.length,
         );
       },
-      separatorBuilder: (context, index) {
-        return const Divider();
-      },
-      itemCount: fakeInstallers.length,
     );
   }
 }

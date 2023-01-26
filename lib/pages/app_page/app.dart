@@ -27,6 +27,7 @@ import 'package:server_management_repository/server_management_repository.dart';
 import 'package:server_properties_repository/server_properties_repository.dart';
 import 'package:server_repository/server_repository.dart';
 import 'package:system_repository/system_repository.dart';
+import 'package:vanilla_server_repository/vanilla_server_repository.dart';
 
 class CubeApp extends StatelessWidget {
   const CubeApp({
@@ -51,6 +52,7 @@ class CubeApp extends StatelessWidget {
     required this.installerCreatorRepository,
     required this.appUpdaterRepository,
     required this.serverConfigurationRepository,
+    required this.vanillaServerRepository,
     Key? key,
   }) : super(key: key);
   final LocaleRepository localeRepository;
@@ -74,6 +76,7 @@ class CubeApp extends StatelessWidget {
   final InstallerCreatorRepository installerCreatorRepository;
   final AppUpdaterRepository appUpdaterRepository;
   final ServerConfigurationRepository serverConfigurationRepository;
+  final VanillaServerRepository vanillaServerRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +132,7 @@ class CubeApp extends StatelessWidget {
         RepositoryProvider.value(value: serverPropertiesRepository),
         RepositoryProvider.value(value: installerCreatorRepository),
         RepositoryProvider.value(value: appUpdaterRepository),
+        RepositoryProvider.value(value: vanillaServerRepository),
       ],
       child: BlocProvider<LocaleBloc>(
         create: (_) => LocaleBloc(localeRepository),
