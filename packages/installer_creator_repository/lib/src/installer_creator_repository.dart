@@ -19,7 +19,7 @@ class InstallerCreatorRepository {
     FileSystem? fileSystem,
   }) : _fileSystem = fileSystem ?? const LocalFileSystem();
 
-  Future<void> create({
+  Future<MapEntry<String, Installer>> create({
     required String name,
     required String description,
     required String server,
@@ -46,5 +46,7 @@ class InstallerCreatorRepository {
     );
     final raw = jsonEncode(installer.toJson());
     await file.writeAsString(raw);
+
+    return MapEntry(file.absolute.path, installer);
   }
 }

@@ -65,20 +65,30 @@ void main() {
       ];
       const pack = ModelPack(path: 'https://pack', description: 'packDesc');
       test('return normally', () async {
-        await expectLater(
-          repository.create(
-            name: name,
-            description: description,
-            server: server,
-            type: type,
-            map: map,
-            settings: settings,
-            pack: pack,
+        final result = await repository.create(
+          name: name,
+          description: description,
+          server: server,
+          type: type,
+          map: map,
+          settings: settings,
+          pack: pack,
+        );
+        expect(
+          result.value,
+          const Installer(
+            name,
+            description,
+            type,
+            server,
+            mapZipPath: map,
+            modelSettings: settings,
+            modelPack: pack,
           ),
-          completes,
         );
 
         final file = fileSystem.file(p.join('installers', '$name.dmc'));
+        expect(result.key, file.absolute.path);
         expect(await file.exists(), isTrue);
         final data = await file.readAsString();
         expect(
@@ -100,22 +110,32 @@ void main() {
 
       test('return normally with subfolder', () async {
         const subfolder = '123';
-        await expectLater(
-          repository.create(
-            name: name,
-            description: description,
-            server: server,
-            type: type,
-            map: map,
-            settings: settings,
-            pack: pack,
-            subfolder: subfolder,
+        final result = await repository.create(
+          name: name,
+          description: description,
+          server: server,
+          type: type,
+          map: map,
+          settings: settings,
+          pack: pack,
+          subfolder: subfolder,
+        );
+        expect(
+          result.value,
+          const Installer(
+            name,
+            description,
+            type,
+            server,
+            mapZipPath: map,
+            modelSettings: settings,
+            modelPack: pack,
           ),
-          completes,
         );
 
         final file =
             fileSystem.file(p.join('installers', subfolder, '$name.dmc'));
+        expect(result.key, file.absolute.path);
         expect(await file.exists(), isTrue);
         final data = await file.readAsString();
         expect(

@@ -116,53 +116,78 @@ void main() {
       });
 
       test('return normally', () async {
+        final path = p.join('installers', '$name.dmc');
         final file = MockFile();
-        when(() => fileSystem.file(p.join('installers', '$name.dmc')))
-            .thenReturn(file);
+        when(() => fileSystem.file(path)).thenReturn(file);
         when(() => file.create(recursive: true)).thenAnswer((_) async => file);
         when(() => file.writeAsString(captureAny()))
             .thenAnswer((_) async => file);
-        await expectLater(
-          repository.create(
-            name: name,
-            description: description,
-            server: server,
-            type: type,
-            map: map,
-            settings: settings,
-            pack: pack,
+        when(() => file.absolute).thenReturn(file);
+        when(() => file.path).thenReturn(path);
+        final result = await repository.create(
+          name: name,
+          description: description,
+          server: server,
+          type: type,
+          map: map,
+          settings: settings,
+          pack: pack,
+        );
+        expect(result.key, path);
+        expect(
+          result.value,
+          const Installer(
+            name,
+            description,
+            type,
+            server,
+            mapZipPath: map,
+            modelSettings: settings,
+            modelPack: pack,
           ),
-          completes,
         );
       });
 
       test('return normally in subfolder', () async {
         const subfolder = '123';
+        final path = p.join('installers', subfolder, '$name.dmc');
         final file = MockFile();
         when(
           () => fileSystem.file(
-            p.join('installers', subfolder, '$name.dmc'),
+            path,
           ),
         ).thenReturn(file);
         when(() => file.create(recursive: true)).thenAnswer((_) async => file);
         when(() => file.writeAsString(captureAny()))
             .thenAnswer((_) async => file);
-        await expectLater(
-          repository.create(
-            name: name,
-            description: description,
-            server: server,
-            type: type,
-            map: map,
-            settings: settings,
-            pack: pack,
-            subfolder: subfolder,
+        when(() => file.absolute).thenReturn(file);
+        when(() => file.path).thenReturn(path);
+        final result = await repository.create(
+          name: name,
+          description: description,
+          server: server,
+          type: type,
+          map: map,
+          settings: settings,
+          pack: pack,
+          subfolder: subfolder,
+        );
+        expect(result.key, path);
+        expect(
+          result.value,
+          const Installer(
+            name,
+            description,
+            type,
+            server,
+            mapZipPath: map,
+            modelSettings: settings,
+            modelPack: pack,
           ),
-          completes,
         );
 
         verify(
-          () => fileSystem.file(p.join('installers', subfolder, '$name.dmc')),
+          () => fileSystem.file(path),
         ).called(1);
       });
     });
