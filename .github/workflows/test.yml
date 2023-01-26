@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
       - name: Install Dependencies
@@ -72,7 +72,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
       - name: Install Dependencies
@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
       - name: Install Dependencies
@@ -106,7 +106,7 @@ jobs:
           top -l 1 -s 0 | grep PhysMem | awk '{print $2}'
           top -l 1 -s 0 | grep PhysMem | awk '{print $6}'
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
       - name: Install Dependencies
@@ -195,7 +195,7 @@ jobs:
       # - name: Setup Java
       #   run: |
       #     .\.github\workflows\scripts\windows_integration_setup.bat
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
       - name: Install Dependencies
@@ -254,7 +254,7 @@ jobs:
       # - name: Setup Java
       #   run: |
       #     ./.github/workflows/scripts/linux_integration_setup.sh
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
       - name: Install Dependencies
@@ -314,7 +314,7 @@ jobs:
       # - name: Setup Java
       #   run: |
       #     ./.github/workflows/scripts/macos_integratin_setup.sh
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
       - name: Install Dependencies
