@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('VanillaServerRepository (Ignore for third party api)', () {
+    test('dummy test for melos#261 and flutter#100467', () {});
+
     // late SystemRepository repository;
 
     // setUp(
