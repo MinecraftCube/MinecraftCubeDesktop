@@ -80,6 +80,27 @@ void main() {
           isTrue,
         );
       });
+
+      test('create installers directory with subfolder at rootPath', () async {
+        const subfolder = '123';
+        expect(
+          await fileSystem
+              .directory(p.join(rootPath.path, 'installers', subfolder))
+              .exists(),
+          isFalse,
+        );
+        expect(
+          await repository.createInstallersDir(subfolder: subfolder),
+          p.join(rootPath.path, 'installers', subfolder),
+        );
+
+        expect(
+          await fileSystem
+              .directory(p.join(rootPath.path, 'installers', subfolder))
+              .exists(),
+          isTrue,
+        );
+      });
     });
 
     group('getInstallers', () {

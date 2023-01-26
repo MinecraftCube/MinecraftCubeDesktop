@@ -135,6 +135,36 @@ void main() {
           completes,
         );
       });
+
+      test('return normally in subfolder', () async {
+        const subfolder = '123';
+        final file = MockFile();
+        when(
+          () => fileSystem.file(
+            p.join('installers', subfolder, '$name.dmc'),
+          ),
+        ).thenReturn(file);
+        when(() => file.create(recursive: true)).thenAnswer((_) async => file);
+        when(() => file.writeAsString(captureAny()))
+            .thenAnswer((_) async => file);
+        await expectLater(
+          repository.create(
+            name: name,
+            description: description,
+            server: server,
+            type: type,
+            map: map,
+            settings: settings,
+            pack: pack,
+            subfolder: subfolder,
+          ),
+          completes,
+        );
+
+        verify(
+          () => fileSystem.file(p.join('installers', subfolder, '$name.dmc')),
+        ).called(1);
+      });
     });
   });
 }

@@ -27,8 +27,13 @@ class InstallerCreatorRepository {
     required String map,
     required List<ModelSetting> settings,
     required ModelPack? pack,
+    String? subfolder,
   }) async {
-    final file = _fileSystem.file(p.join('installers', '$name.dmc'));
+    String path = p.join('installers', '$name.dmc');
+    if (subfolder != null && subfolder.isNotEmpty) {
+      path = p.join('installers', subfolder, '$name.dmc');
+    }
+    final file = _fileSystem.file(path);
     await file.create(recursive: true);
     final installer = Installer(
       name,

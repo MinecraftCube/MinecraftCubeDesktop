@@ -54,9 +54,15 @@ class ServerManagementRepository {
     }
   }
 
-  Future<String> createInstallersDir() async {
-    final installerDir = _installersDir;
+  Future<String> createInstallersDir({String? subfolder}) async {
+    Directory installerDir = _installersDir;
+
+    if (subfolder != null && subfolder.isNotEmpty) {
+      installerDir = installerDir.childDirectory(subfolder);
+    }
+
     await installerDir.create(recursive: true);
+
     return installerDir.absolute.path;
   }
 
