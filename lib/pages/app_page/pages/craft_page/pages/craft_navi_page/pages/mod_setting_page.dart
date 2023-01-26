@@ -80,7 +80,7 @@ class _ModelSettingNaviPageState extends State<ModelSettingNaviPage> {
     // TextStyle titleStyle = Theme.of(context).textTheme.title.copyWith(color: ColorPalette.primaryColor);
     final TextTheme textTheme = Theme.of(context).textTheme;
     TextStyle? descriptionTitleStyle =
-        textTheme.subtitle1?.copyWith(color: Colors.grey);
+        textTheme.titleMedium?.copyWith(color: Colors.grey);
 
     const currentMode = ModelSettingType.detail;
     // return BlocBuilder<MPB.NaviPageBloc, MPB.NaviPageState>(
@@ -284,7 +284,7 @@ class _DetailListTileState extends State<DetailListTile> {
             final title = _nameController.text;
             return Text(
               title.isNotEmpty ? title : craftModelSettingPageFieldTitle.i18n,
-              style: textTheme.bodyText1?.copyWith(color: Colors.white),
+              style: textTheme.bodyLarge?.copyWith(color: Colors.white),
             );
           },
         ),
@@ -316,7 +316,7 @@ class _DetailListTileState extends State<DetailListTile> {
                       children: <Widget>[
                         Text(
                           craftModelSettingPageFieldModel.i18n,
-                          style: textTheme.subtitle1
+                          style: textTheme.titleMedium
                               ?.copyWith(color: colorScheme.primary),
                         ),
                         const SizedBox(width: 12),
@@ -340,7 +340,7 @@ class _DetailListTileState extends State<DetailListTile> {
                       children: <Widget>[
                         Text(
                           craftModelSettingPageFieldFilename.i18n,
-                          style: textTheme.subtitle1
+                          style: textTheme.titleMedium
                               ?.copyWith(color: colorScheme.primary),
                         ),
                         const SizedBox(width: 12),
@@ -369,7 +369,7 @@ class _DetailListTileState extends State<DetailListTile> {
                   children: <Widget>[
                     Text(
                       craftModelSettingPageFieldDownload.i18n,
-                      style: textTheme.subtitle1
+                      style: textTheme.titleMedium
                           ?.copyWith(color: colorScheme.primary),
                     ),
                     const SizedBox(width: 12),

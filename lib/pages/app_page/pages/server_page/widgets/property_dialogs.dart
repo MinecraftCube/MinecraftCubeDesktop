@@ -184,12 +184,12 @@ class WikiSection extends StatelessWidget {
         children: <Widget>[
           Text(
             serverPagePropertyDialogServerInfoFrom.i18n,
-            style: textTheme.caption,
+            style: textTheme.bodySmall,
           ),
           GestureDetector(
             child: Text(
               serverPagePropertyDialogFromMinecraftWiki.i18n,
-              style: textTheme.caption?.copyWith(
+              style: textTheme.bodySmall?.copyWith(
                 decoration: TextDecoration.underline,
                 color: Colors.blueAccent,
               ),

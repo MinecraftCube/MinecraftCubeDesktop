@@ -36,7 +36,7 @@ class InfoIconButton extends StatelessWidget {
             name,
             style: Theme.of(context)
                 .textTheme
-                .subtitle2!
+                .titleSmall!
                 .copyWith(color: Colors.black),
           )
         ],

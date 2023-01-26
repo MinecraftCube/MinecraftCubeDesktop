@@ -44,11 +44,11 @@ class BuildPageBasePage extends StatelessWidget {
     ColorScheme scheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme;
     TextStyle? titleStyle =
-        textTheme.subtitle1?.copyWith(color: scheme.primary);
-    // TextStyle descriptionTitleStyle = textTheme.headline6.copyWith(color: ColorPalette.accentColor);
+        textTheme.titleMedium?.copyWith(color: scheme.primary);
+    // TextStyle descriptionTitleStyle = textTheme.titleLarge.copyWith(color: ColorPalette.accentColor);
     TextStyle? descriptionStyle = Theme.of(context)
         .textTheme
-        .subtitle1
+        .titleMedium
         ?.copyWith(color: scheme.secondary);
 
     Widget nextButton = BasePageNextButton(
@@ -132,7 +132,7 @@ class BasePageNextButton extends StatelessWidget {
     ColorScheme scheme = Theme.of(context).colorScheme;
     TextStyle? headerBtnStyle = Theme.of(context)
         .textTheme
-        .subtitle1
+        .titleMedium
         ?.copyWith(color: scheme.onPrimary);
     return ElevatedButton(
       style: ButtonStyle(
@@ -177,10 +177,10 @@ class BaseTitle extends StatelessWidget {
     ColorScheme scheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme;
     TextStyle? headerStyle =
-        textTheme.headline6?.copyWith(color: scheme.primary);
+        textTheme.titleLarge?.copyWith(color: scheme.primary);
     TextStyle? headerBtnStyle = Theme.of(context)
         .textTheme
-        .subtitle1
+        .titleMedium
         ?.copyWith(color: scheme.onPrimary);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
