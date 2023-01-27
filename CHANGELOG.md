@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2023-01-07
+
+### Added
+
+- Add support for creating vanilla server (#12)
+
+### Changed
+
+- Upgrade to flutter 3.7.0 (#13)
+
 ## [1.2.0] - 2022-06-04
 
 ### Added
@@ -66,6 +76,7 @@
 [0.0.4]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v0.0.2...v0.0.3 -->
 
+[1.3.0]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v1.3.0...v1.2.0
 [1.2.0]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v1.2.0...v1.1.0
 [1.1.0]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v1.1.0...v1.0.0
 [1.0.0]: https://github.com/MinecraftCube/MinecraftCubeDesktop/compare/v1.0.0...v0.0.2
