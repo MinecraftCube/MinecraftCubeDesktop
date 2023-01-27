@@ -1,3 +1,18 @@
+## MinecraftCube 1.3.0 - 2023/01/27
+
+### Add
+
+- Support vanilla server by default, we can now add vanilla server without installer at [Create a server] button. (#12)
+
+### Changed
+
+- Upgrade flutter framework to 3.7.0 (#13)
+
+**Download:**
+[Windows](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.3.0/windows-release-v1.3.0.zip),
+[Linux](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.3.0/linux-release-v1.3.0.zip),
+[MacOS](https://github.com/MinecraftCube/MinecraftCubeDesktop/releases/download/v1.3.0/macos-release-v1.3.0.zip)
+
 ## MinecraftCube 1.2.0 - 2022/06/04
 
 ### Add

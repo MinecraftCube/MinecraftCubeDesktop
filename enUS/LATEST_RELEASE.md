@@ -1,16 +1,12 @@
-## MinecraftCube 1.2.0 - 2022/06/04
+## MinecraftCube 1.3.0 - 2023/01/27
 
 ### Add
 
-- Support Forge 1.17.1+, Hope there is no structure changed in the future. (#8)
+- Support vanilla server by default, we can now add vanilla server without installer at [Create a server] button. (#12)
 
 ### Changed
 
-- Upgrade flutter framework to 3.0.1
-
-### Credit
-
-- Thanks for 小羅's feedback on Forge 1.17.1+.
+- Upgrade flutter framework to 3.7.0 (#13)
 
 <!-- Added for new features.
 Changed for changes in existing functionality.
