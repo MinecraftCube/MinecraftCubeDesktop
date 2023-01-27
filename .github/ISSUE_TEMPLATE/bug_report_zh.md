@@ -2,7 +2,7 @@
 name: 🐞 錯誤回報
 about: 填寫回報單幫助軟體進步.
 title: "fix:  "
-labels: "bug, triage"
+labels: "bug"
 ---
 
 <!--

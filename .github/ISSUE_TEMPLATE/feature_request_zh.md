@@ -2,7 +2,7 @@
 name: 🚀 新功能
 about: 請詳細描述想要的新功能
 title: "feat: "
-labels: "feature request, triage"
+labels: "feature"
 ---
 
 ### 這個功能是為了解決什麼問題
