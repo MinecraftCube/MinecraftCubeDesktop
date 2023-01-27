@@ -35,7 +35,7 @@ class InfoIconLink extends StatelessWidget {
             text,
             style: Theme.of(context)
                 .textTheme
-                .subtitle1!
+                .titleMedium!
                 .copyWith(color: Colors.black),
           )
         ],

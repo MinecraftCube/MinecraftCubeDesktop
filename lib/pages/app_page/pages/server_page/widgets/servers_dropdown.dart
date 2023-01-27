@@ -96,7 +96,7 @@ class _ServersDropdownViewState extends State<ServersDropdownView> {
                 value: value,
                 child: Text(
                   state.serverPathToName[value] ?? '',
-                  style: textTheme.caption,
+                  style: textTheme.bodySmall,
                 ),
               );
             }).toList(),

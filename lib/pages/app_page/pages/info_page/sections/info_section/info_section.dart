@@ -1,6 +1,6 @@
 import 'package:app_updater_repository/app_updater_repository.dart';
 import 'package:badges/badges.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minecraft_cube_desktop/_gen/assets.gen.dart';
 import 'package:minecraft_cube_desktop/pages/app_page/pages/info_page/info_page.i18n.dart';

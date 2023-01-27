@@ -59,7 +59,7 @@ class _InstallerNameNaviPageState extends State<InstallerNameNaviPage> {
     // TextStyle headerBtnStyle = Theme.of(context).textTheme.title.copyWith(color: ColorPalette.fontColor);
     final TextTheme textTheme = Theme.of(context).textTheme;
     TextStyle? descriptionTitleStyle =
-        textTheme.subtitle1?.copyWith(color: Colors.grey);
+        textTheme.titleMedium?.copyWith(color: Colors.grey);
     // TextStyle descriptionStyle = Theme.of(context).textTheme.title.copyWith(color: ColorPalette.secondaryColor);
 
     /*return BlocBuilder<NaviPageBloc, NaviPageState>(

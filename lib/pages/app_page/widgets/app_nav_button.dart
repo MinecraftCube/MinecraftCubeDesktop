@@ -44,7 +44,7 @@ class AppNavButton extends StatelessWidget {
               ),
               Text(
                 buttonName,
-                style: Theme.of(context).textTheme.overline!.copyWith(
+                style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       color: Colors.white,
                     ),
               ),

@@ -48,7 +48,7 @@ class _PreviewNaviPageState extends State<PreviewBuildPage> {
     TextTheme textTheme = Theme.of(context).textTheme;
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     TextStyle? descriptionTitleStyle =
-        textTheme.headline6?.copyWith(color: Colors.grey);
+        textTheme.titleLarge?.copyWith(color: Colors.grey);
     // TextStyle descriptionStyle = Theme.of(context).textTheme.title.copyWith(color: ColorPalette.secondaryColor);
 
     return BlocBuilder<NaviPageBloc, NaviPageState>(
