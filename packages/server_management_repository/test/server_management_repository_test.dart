@@ -79,6 +79,33 @@ void main() {
         expect(captured.last, 'installers');
         verify(() => directory.create(recursive: true)).called(1);
       });
+
+      test('call create with subfolder', () async {
+        const subfolder = '123';
+        Directory directory = MockDirectory();
+        when(() => fileSystem.directory(captureAny())).thenReturn(directory);
+        when(() => directory.create(recursive: true)).thenAnswer(
+          (_) async => directory,
+        );
+        when(() => directory.absolute).thenReturn(
+          directory,
+        );
+        when(() => directory.childDirectory(subfolder)).thenReturn(
+          directory,
+        );
+        when(() => directory.path).thenReturn(
+          '/absolute/installers/$subfolder',
+        );
+        expect(
+          await repository.createInstallersDir(subfolder: subfolder),
+          '/absolute/installers/$subfolder',
+        );
+        final captured =
+            verify(() => fileSystem.directory(captureAny())).captured;
+        expect(captured.last, 'installers');
+        verify(() => directory.childDirectory(subfolder)).called(1);
+        verify(() => directory.create(recursive: true)).called(1);
+      });
     });
 
     group('getInstallers', () {

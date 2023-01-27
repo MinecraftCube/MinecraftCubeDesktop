@@ -19,7 +19,7 @@ class InstallerCreatorRepository {
     FileSystem? fileSystem,
   }) : _fileSystem = fileSystem ?? const LocalFileSystem();
 
-  Future<void> create({
+  Future<MapEntry<String, Installer>> create({
     required String name,
     required String description,
     required String server,
@@ -27,8 +27,13 @@ class InstallerCreatorRepository {
     required String map,
     required List<ModelSetting> settings,
     required ModelPack? pack,
+    String? subfolder,
   }) async {
-    final file = _fileSystem.file(p.join('installers', '$name.dmc'));
+    String path = p.join('installers', '$name.dmc');
+    if (subfolder != null && subfolder.isNotEmpty) {
+      path = p.join('installers', subfolder, '$name.dmc');
+    }
+    final file = _fileSystem.file(path);
     await file.create(recursive: true);
     final installer = Installer(
       name,
@@ -41,5 +46,7 @@ class InstallerCreatorRepository {
     );
     final raw = jsonEncode(installer.toJson());
     await file.writeAsString(raw);
+
+    return MapEntry(file.absolute.path, installer);
   }
 }

@@ -1,0 +1,12 @@
+file_reporters:
+  json: reports/test-results.json
+tags:
+  utility:
+  repository:
+  page:
+  component:
+  slow:
+  unittest:
+  integration:
+  widget:
+  debug:

@@ -29,6 +29,7 @@ import 'package:server_properties_repository/server_properties_repository.dart';
 import 'package:server_repository/server_repository.dart';
 import 'package:system_repository/system_repository.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:vanilla_server_repository/vanilla_server_repository.dart';
 
 void main(List<String> args) async {
   const isProduction = bool.fromEnvironment('dart.vm.product');
@@ -100,6 +101,8 @@ void main(List<String> args) async {
     fileSystem: fileSystem,
   );
 
+  final vanillaServerRepository = VanillaServerRepository(dio: dio);
+
   final AppUpdaterRepository appUpdaterRepository =
       AppUpdaterRepository(dio: dio);
 
@@ -136,6 +139,7 @@ void main(List<String> args) async {
       installerCreatorRepository: installerCreatorRepository,
       appUpdaterRepository: appUpdaterRepository,
       serverConfigurationRepository: serverConfigurationRepository,
+      vanillaServerRepository: vanillaServerRepository,
     ),
   );
   await DesktopWindow.setWindowSize(const Size(1400, 900));
