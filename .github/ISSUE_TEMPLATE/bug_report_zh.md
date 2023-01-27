@@ -6,13 +6,13 @@ labels: "bug"
 ---
 
 <!--
-Found a bug? Please fill out the sections below. 👍
+填寫下方欄位回報錯誤，感謝 👍
 -->
 
 ### 問題描述
 
 <!--
-A summary of the issue.
+請簡單描述問題的狀況
 -->
 
 ### 發生問題的步驟

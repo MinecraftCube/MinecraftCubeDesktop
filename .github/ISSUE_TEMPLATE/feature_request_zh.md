@@ -8,25 +8,24 @@ labels: "feature"
 ### 這個功能是為了解決什麼問題
 
 <!--
-  Provide a clear and concise description of what the problem is.
-  For example, "I'm always frustrated when..."
+  描述遇到什麼而啟發這個想法，可以解決什麼問題
 -->
 
-(Write your answer here.)
+(在這裡寫下你的回答)
 
 ### 想要的解決方法
 
 <!--
-  Provide a clear and concise description of what you want to happen.
+  詳述想要的功能，詳細的操作、內容
 -->
 
-(Describe your proposed solution here.)
+(在這裡描述你提出的解決方案)
 
 ### 補充
 
 <!--
-  Is there anything else you can add about the proposal?
-  You might want to link to related issues here, if you haven't already.
+  有任何補充的可以在此敘述
+  如果有連結到任何其他 issue 歡迎列出
 -->
 
-(Write your answer here.)
+(在這裡寫下你的回答)
