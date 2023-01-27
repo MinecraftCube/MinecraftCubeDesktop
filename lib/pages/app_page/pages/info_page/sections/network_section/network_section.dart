@@ -97,11 +97,12 @@ class _PublicIpSectionState extends State<PublicIpSection> {
           children: [
             Text(
               networkSectionPublicIp.i18n,
-              style: textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+              style:
+                  textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             Text(
               state.ip,
-              style: textTheme.subtitle2?.copyWith(color: Colors.green),
+              style: textTheme.titleSmall?.copyWith(color: Colors.green),
             ),
           ],
         );
@@ -135,12 +136,13 @@ class _GatewayIpSectionState extends State<GatewayIpSection> {
           children: [
             Text(
               networkSectionGatewayIp.i18n,
-              style: textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+              style:
+                  textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             ...state.ips.map(
               (ip) => Text(
                 ip,
-                style: textTheme.subtitle2?.copyWith(color: Colors.green),
+                style: textTheme.titleSmall?.copyWith(color: Colors.green),
               ),
             )
           ],
@@ -175,7 +177,8 @@ class _InternalIpSectionState extends State<InternalIpSection> {
           children: [
             Text(
               networkSectionInternalIp.i18n,
-              style: textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+              style:
+                  textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 8,
@@ -195,13 +198,13 @@ class _InternalIpSectionState extends State<InternalIpSection> {
                         children: [
                           Text(
                             interface.name,
-                            style: textTheme.bodyText2
+                            style: textTheme.bodyMedium
                                 ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           ...interface.addresses.map(
                             (e) => Text(
                               e.address,
-                              style: textTheme.subtitle2
+                              style: textTheme.titleSmall
                                   ?.copyWith(color: Colors.green),
                             ),
                           ),

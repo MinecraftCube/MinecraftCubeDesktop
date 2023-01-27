@@ -19,12 +19,12 @@ class EulaAgreementDialog extends StatelessWidget {
             children: <Widget>[
               RichText(
                 text: TextSpan(
-                  style: textTheme.subtitle2?.copyWith(color: Colors.black),
+                  style: textTheme.titleSmall?.copyWith(color: Colors.black),
                   children: <TextSpan>[
                     TextSpan(text: serverPageEulaDialogNotify.i18n),
                     TextSpan(
                       text: serverPageEulaDialogEula.i18n,
-                      style: textTheme.subtitle2?.copyWith(color: Colors.blue),
+                      style: textTheme.titleSmall?.copyWith(color: Colors.blue),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           context.read<LauncherRepository>().launch(

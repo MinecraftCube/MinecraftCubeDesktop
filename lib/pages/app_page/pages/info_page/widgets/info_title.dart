@@ -18,12 +18,12 @@ class InfoTitle extends StatelessWidget {
             Icon(icon),
             Text(
               title,
-              style: textTheme.headline6!,
+              style: textTheme.titleLarge!,
             ),
           ],
         ),
         Divider(
-          color: textTheme.bodyText1!.color,
+          color: textTheme.bodyLarge!.color,
         )
       ],
     );

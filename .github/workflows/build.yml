@@ -24,7 +24,7 @@ jobs:
       MACHINE_OS: windows
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
       - name: Doctor
@@ -55,7 +55,7 @@ jobs:
       MACHINE_OS: linux
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
       - name: Install Linux dependencies	
@@ -91,7 +91,7 @@ jobs:
       MACHINE_OS: macos
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
       - name: Doctor

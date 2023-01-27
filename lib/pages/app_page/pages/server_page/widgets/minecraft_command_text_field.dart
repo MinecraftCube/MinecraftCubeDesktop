@@ -80,7 +80,7 @@ class _MinecraftCommandTextFieldState extends State<MinecraftCommandTextField> {
     //       isDense: true,
     //       contentPadding: EdgeInsets.symmetric(vertical: 12),
     //     ),
-    //     style: Theme.of(context).textTheme.overline?.copyWith(
+    //     style: Theme.of(context).textTheme.labelSmall?.copyWith(
     //           color: Theme.of(context).colorScheme.onBackground,
     //         ),
     //     onFieldSubmitted: (text) {
@@ -102,7 +102,7 @@ class _MinecraftCommandTextFieldState extends State<MinecraftCommandTextField> {
       hideOnLoading: true,
       textFieldConfiguration: TextFieldConfiguration(
         focusNode: _focusNode,
-        style: Theme.of(context).textTheme.overline?.copyWith(
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: Theme.of(context).colorScheme.onBackground,
             ),
         // enabled: widget.enabled == true,
@@ -196,7 +196,7 @@ class _MinecraftCommandTextFieldState extends State<MinecraftCommandTextField> {
     //         contentPadding: EdgeInsets.symmetric(vertical: 12),
     //       ),
     //       onEditingComplete: onEditingComplete,
-    //       style: Theme.of(context).textTheme.overline?.copyWith(
+    //       style: Theme.of(context).textTheme.labelSmall?.copyWith(
     //             color: Theme.of(context).colorScheme.onBackground,
     //           ),
     //       onSubmitted: (text) {

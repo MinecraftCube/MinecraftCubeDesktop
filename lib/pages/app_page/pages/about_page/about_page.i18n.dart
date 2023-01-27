@@ -72,7 +72,7 @@ List<InlineSpan> _getAuthorTextSpanEnUS(
     ),
     TextSpan(
       text: 'Youtube',
-      style: textTheme.subtitle1?.copyWith(color: Colors.red),
+      style: textTheme.titleMedium?.copyWith(color: Colors.red),
       recognizer: TapGestureRecognizer()..onTap = onTapYoutube,
     ),
   ];
@@ -109,7 +109,7 @@ List<InlineSpan> _getAuthorTextSpanZhTW(
     ),
     TextSpan(
       text: 'Youtube',
-      style: textTheme.subtitle1?.copyWith(color: Colors.red),
+      style: textTheme.titleMedium?.copyWith(color: Colors.red),
       recognizer: TapGestureRecognizer()..onTap = onTapYoutube,
     ),
   ];

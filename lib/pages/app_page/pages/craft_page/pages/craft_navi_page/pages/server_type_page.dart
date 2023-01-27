@@ -30,11 +30,6 @@ class _ServerTypeNaviPageState extends State<ServerTypeNaviPage>
   JarType? _selectType = JarType.vanilla;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
     // TextStyle headerStyle = Theme.of(context).textTheme.headline.copyWith(color: ColorPalette.primaryColor);
@@ -42,9 +37,9 @@ class _ServerTypeNaviPageState extends State<ServerTypeNaviPage>
     final TextTheme textTheme = Theme.of(context).textTheme;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     TextStyle? titleStyle =
-        textTheme.subtitle1?.copyWith(color: colorScheme.primary);
+        textTheme.titleMedium?.copyWith(color: colorScheme.primary);
     TextStyle? descriptionTitleStyle =
-        textTheme.subtitle1?.copyWith(color: Colors.grey);
+        textTheme.titleMedium?.copyWith(color: Colors.grey);
 
     // return BlocBuilder<MPB.NaviPageBloc, MPB.NaviPageState>(
     //   buildWhen: (state, oldState) => oldState.type != state.type,

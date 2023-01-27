@@ -163,7 +163,7 @@ class _GpuInfoSectionState extends State<GpuInfoSection> {
       builder: (context, state) {
         final textTheme = Theme.of(context).textTheme;
         final contentStyle =
-            textTheme.bodyText2?.copyWith(color: textTheme.caption?.color);
+            textTheme.bodyMedium?.copyWith(color: textTheme.bodySmall?.color);
         return ListTile(
           leading: Text(systemSectionGpu.i18n),
           title: Text(
@@ -198,7 +198,7 @@ class _SystemJavaInfoSectionState extends State<SystemJavaInfoSection> {
         final colorTheme = Theme.of(context).colorScheme;
         final info = state.info;
         final contentStyle =
-            textTheme.bodyText2?.copyWith(color: textTheme.caption?.color);
+            textTheme.bodyMedium?.copyWith(color: textTheme.bodySmall?.color);
         const gap = SizedBox(
           height: 8,
         );
@@ -210,7 +210,7 @@ class _SystemJavaInfoSectionState extends State<SystemJavaInfoSection> {
               Text(
                 systemSectionSystemJava.i18n,
                 style:
-                    textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+                    textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
               ),
               gap,
               Container(
@@ -296,7 +296,7 @@ class _PortableJavaInfoSectionState extends State<PortableJavaInfoSection> {
               Text(
                 systemSectionPortableJava.i18n,
                 style:
-                    textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+                    textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
               ),
               gap,
               ...infos.map(

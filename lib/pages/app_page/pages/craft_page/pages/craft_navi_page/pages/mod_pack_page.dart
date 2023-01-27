@@ -65,7 +65,7 @@ class _ModpackNaviPageState extends State<ModpackNaviPage> {
     // TextStyle titleStyle = Theme.of(context).textTheme.title.copyWith(color: ColorPalette.primaryColor);
     final TextTheme textTheme = Theme.of(context).textTheme;
     TextStyle? descriptionTitleStyle =
-        textTheme.subtitle1?.copyWith(color: Colors.grey);
+        textTheme.titleMedium?.copyWith(color: Colors.grey);
 
     const currentMode = ModelSettingType.pack;
     // return BlocBuilder<MPB.NaviPageBloc, MPB.NaviPageState>(

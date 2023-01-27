@@ -82,7 +82,7 @@ class AboutBanner extends StatelessWidget {
               color: Colors.black26,
               child: Text(
                 aboutPageTitle.i18n,
-                style: Theme.of(context).textTheme.headline3?.copyWith(
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
                   shadows: <Shadow>[
                     const Shadow(
                       offset: Offset(10.0, 10.0),
@@ -188,7 +188,7 @@ class AuthorCard extends StatelessWidget {
           Expanded(
             child: RichText(
               text: TextSpan(
-                style: textTheme.bodyText1?.copyWith(height: 1.5),
+                style: textTheme.bodyLarge?.copyWith(height: 1.5),
                 children: getAuthorTextSpan(
                   () => context.read<LauncherRepository>().launch(
                         path:
@@ -225,7 +225,7 @@ class AppCard extends StatelessWidget {
               text: TextSpan(
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText1
+                    .bodyLarge
                     ?.copyWith(height: 1.5),
                 children: getAppTextSpan(),
               ),
@@ -246,7 +246,7 @@ class SecretCard extends StatelessWidget {
       bgColor: Colors.grey.shade300,
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.bodyText1?.copyWith(height: 1.5),
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.5),
           children: getSecretTextSpan(),
         ),
       ),

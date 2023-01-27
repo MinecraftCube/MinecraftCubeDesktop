@@ -28,12 +28,12 @@ class PropertyListTile extends StatelessWidget {
     return ExpansionTile(
       title: Text(
         title,
-        style: textTheme.caption
+        style: textTheme.bodySmall
             ?.copyWith(fontWeight: FontWeight.bold, color: colorTheme.primary),
       ),
       subtitle: Text(
         fieldName,
-        style: textTheme.caption?.copyWith(color: Colors.grey),
+        style: textTheme.bodySmall?.copyWith(color: Colors.grey),
       ),
       trailing: Container(
         constraints: const BoxConstraints(maxWidth: 120, maxHeight: 96),
@@ -50,7 +50,7 @@ class PropertyListTile extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Text(
               description,
-              style: textTheme.caption,
+              style: textTheme.bodySmall,
             ),
           ),
         ),
@@ -113,7 +113,7 @@ class _IntegerPropertyListTileState extends State<IntegerPropertyListTile> {
       title: widget.title,
       trailing: TextField(
         controller: _controller,
-        style: textTheme.caption,
+        style: textTheme.bodySmall,
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r'^-*\d+$'))
         ],
@@ -170,7 +170,7 @@ class _StringPropertyListTileState extends State<StringPropertyListTile> {
       fieldName: widget.fieldName,
       title: widget.title,
       trailing: TextField(
-        style: textTheme.caption,
+        style: textTheme.bodySmall,
         controller: _controller,
         keyboardType: TextInputType.text,
       ),

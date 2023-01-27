@@ -105,11 +105,6 @@ class _ServerPageViewState extends State<ServerPageView>
   String? activeProjectPath;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
     const gap = SizedBox(
@@ -228,7 +223,7 @@ class _ServerSectionState extends State<ServerSection> {
                   children: [
                     Text(
                       serverPageCommandInput.i18n,
-                      style: Theme.of(context).textTheme.overline?.copyWith(
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
                             color: Theme.of(context).colorScheme.onBackground,
                           ),
                     ),
@@ -255,7 +250,7 @@ class _ServerSectionState extends State<ServerSection> {
                       //     isDense: true,
                       //     contentPadding: EdgeInsets.symmetric(vertical: 12),
                       //   ),
-                      //   style: Theme.of(context).textTheme.overline?.copyWith(
+                      //   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       //         color: Theme.of(context).colorScheme.onBackground,
                       //       ),
                       //   onSubmitted: (text) {
@@ -517,7 +512,7 @@ class _ConsoleLinesDisplayerState extends State<ConsoleLinesDisplayer> {
       controller: _controller,
       child: SelectableText.rich(
         TextSpan(
-          style: textTheme.caption,
+          style: textTheme.bodySmall,
           children: texts
               .map(
                 (e) => TextSpan(

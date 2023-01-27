@@ -134,7 +134,7 @@ class CraftIntroPageState extends State<CraftIntroPage> {
         gap,
         Text(
           craftPageSelectAnApproach.i18n.toUpperCase(),
-          style: textTheme.headline5,
+          style: textTheme.headlineSmall,
         ),
         gap,
         GroupButton(
@@ -142,8 +142,8 @@ class CraftIntroPageState extends State<CraftIntroPage> {
             spacing: 4,
             textPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             selectedTextStyle:
-                textTheme.headline6?.copyWith(color: Colors.white),
-            unselectedTextStyle: textTheme.headline6,
+                textTheme.titleLarge?.copyWith(color: Colors.white),
+            unselectedTextStyle: textTheme.titleLarge,
           ),
           controller: _controller,
           onSelected: (_, index, __) {
@@ -193,7 +193,7 @@ class CraftIntroPageState extends State<CraftIntroPage> {
                       ),
                       Text(
                         craftPagePlaylist.i18n,
-                        style: textTheme.bodyText1?.copyWith(
+                        style: textTheme.bodyLarge?.copyWith(
                           decoration: TextDecoration.underline,
                         ),
                       ),
@@ -202,12 +202,10 @@ class CraftIntroPageState extends State<CraftIntroPage> {
                   onTap: () async {
                     const link =
                         'https://www.youtube.com/playlist?list=PLhinMkAHNXof487STGZe50wHG3rS92jv3';
-                    if (await context
-                        .read<LauncherRepository>()
-                        .canLaunch(path: link)) {
-                      await context
-                          .read<LauncherRepository>()
-                          .launch(path: link);
+                    final launcherRepository =
+                        context.read<LauncherRepository>();
+                    if (await launcherRepository.canLaunch(path: link)) {
+                      await launcherRepository.launch(path: link);
                     }
                   },
                 ),
@@ -239,7 +237,7 @@ class CraftIntroPageInstallerSection extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return RichText(
       text: TextSpan(
-        style: textTheme.bodyText2,
+        style: textTheme.bodyMedium,
         children: [
           TextSpan(
             text: craftPageInstallerDesc.i18n,
@@ -259,11 +257,11 @@ class CraftIntroPageIntegrateSection extends StatelessWidget {
 
     return RichText(
       text: TextSpan(
-        style: textTheme.bodyText2,
+        style: textTheme.bodyMedium,
         children: [
           TextSpan(
             text: craftPageManualDescFollowing.i18n,
-            style: textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+            style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           TextSpan(
             text: craftPageManualDescFollowingA.i18n,
@@ -279,7 +277,7 @@ class CraftIntroPageIntegrateSection extends StatelessWidget {
           ),
           TextSpan(
             text: craftPageManualDescIntegrate.i18n,
-            style: textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+            style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           TextSpan(
             text: craftPageManualDescIntegrateA.i18n,

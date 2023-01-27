@@ -81,7 +81,7 @@ class _CraftNaviPageViewState extends State<CraftNaviPageView> {
     // final double itemWidth = MediaQuery.of(context).size.width / 2;
     // TextStyle _ = Theme.of(context)
     //     .textTheme
-    //     .headline6
+    //     .titleLarge
     //     .copyWith(color: ColorPalette.primaryColor);
 
     void onMenuPressed() {
