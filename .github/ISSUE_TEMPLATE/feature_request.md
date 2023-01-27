@@ -2,7 +2,7 @@
 name: 🚀 Feature request
 description: A new feature to be added to the project
 title: "feat: "
-labels: ["feature request", "triage"]
+labels: "feature request, triage"
 ---
 
 ### Is your proposal related to a problem?
